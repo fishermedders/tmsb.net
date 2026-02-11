@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap");
 
 :root {
-    --border-frame-size: 20px;
+    --border-frame-size: 15px;
     --border-frame-color: #161614;
 }
 
@@ -14,8 +14,15 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
-    overflow: hidden; /* This disables both vertical and horizontal scrolling */
+    /* Remove height: 100% and overflow: hidden */
+}
+
+.stage {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow-x: hidden; /* Hides the plane when it's outside left/right */
+    overflow-y: auto; /* Allows vertical scrolling if content is long */
 }
 
 #root {
@@ -24,9 +31,13 @@ body {
     overflow: hidden;
 }
 
-.stage {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    overflow: hidden; /* This forces iOS to clip the flying images */
+nav,
+main {
+    max-width: 935px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+main {
+    padding: 20px;
 }

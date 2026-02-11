@@ -1,5 +1,22 @@
 import { useState } from "react";
 import "./App.css";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Home from "./pages/home/Home.jsx";
+
+function NavigationWrapper() {
+  const location = useLocation();
+
+  return (
+    <>
+      {/* This div only shows if the path is NOT "/" */}
+      {location.pathname !== "/" && (
+        <div className="back-button">
+          <a href="/">← Back to Home</a>
+        </div>
+      )}
+    </>
+  );
+}
 
 function App() {
   return (
@@ -14,15 +31,12 @@ function App() {
           <img src="/assets/tour-logo.png" />
           <img src="/assets/tour-plane.png" />
         </div>
-        <nav className="navbar">
-          <ul>
-            <li>Home</li>
-            <li>Tour/Tix</li>
-            <li>Merch</li>
-            <li>Booking</li>
-            <li>Gallery</li>
-          </ul>
-        </nav>
+        <NavigationWrapper />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </main>
       </div>
     </>
   );
