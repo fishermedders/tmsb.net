@@ -1,0 +1,8 @@
+:root {
+    --border-frame-size: 10px;
+    --border-frame-color: #161614;
+}
+
+body {
+    margin: var(--border-frame-size);
+}

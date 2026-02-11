@@ -1,0 +1,111 @@
+.hero-sky {
+    width: 100%;
+    height: 20vw;
+    background: linear-gradient(#87aac0, #9bceaf);
+}
+
+.hero-background {
+    width: 100%;
+    height: 1000vw;
+    background: url("/assets/hero-background.jpg");
+}
+
+.hero-clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30vw;
+}
+
+.hero-clouds img {
+    width: 100%;
+    justify-self: center;
+}
+
+.hero-logo {
+    justify-self: center;
+    position: absolute;
+    top: var(--border-frame-size);
+}
+
+.hero-logo img {
+    position: absolute;
+    width: 50vw;
+    eleft: 50%;
+    transform: translateX(-50%);
+}
+
+.hero-logo img:nth-child(2) {
+    /* Ensure it doesn't show up before the animation starts */
+    position: absolute;
+    left: 100vw;
+    animation: flyIn 1s ease-out forwards;
+}
+
+@keyframes flyIn {
+    0% {
+        left: 100vw;
+        transform: translateX(0%);
+    }
+    100% {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* 1. Clouds: Fly in from the top */
+.hero-clouds {
+    position: absolute;
+    top: -100%; /* Start above the screen */
+    left: 0;
+    width: 100%;
+    height: 30vw;
+    animation: cloudsDown 1.5s ease-out forwards;
+}
+
+/* 2. Logo (First Image): Fly in from the left */
+.hero-logo img:nth-child(1) {
+    position: absolute;
+    width: 50vw;
+    left: -100vw; /* Start off-screen to the left */
+    animation: planeIn 1.8s ease-out 0.2s forwards; /* Added 0.2s delay */
+}
+
+/* 3. Plane (Second Image): Fly in from the right (Our previous fix) */
+.hero-logo img:nth-child(2) {
+    position: absolute;
+    width: 50vw;
+    left: 100vw;
+    animation: logoIn 2s ease-out 0.4s forwards; /* Added 0.4s delay */
+}
+
+/* --- Keyframes --- */
+
+@keyframes cloudsDown {
+    100% {
+        top: 0;
+    }
+}
+
+@keyframes logoIn {
+    0% {
+        left: -100vw;
+        transform: translateX(0%);
+    }
+    100% {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes planeIn {
+    0% {
+        left: 100vw;
+        transform: translateX(0%);
+    }
+    100% {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
