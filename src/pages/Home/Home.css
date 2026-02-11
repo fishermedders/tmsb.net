@@ -1,0 +1,37 @@
+.navbar {
+    position: absolute;
+    top: calc(30vw + 80px); /* Start exactly where your hero ends */
+    width: 100%;
+    height: calc(
+        100vh - (30vw + 250px)
+    ); /* Fill the rest of the vertical screen */
+    margin-top: 0; /* Cleared this to use the calc in 'top' for better precision */
+    display: flex;
+    flex-direction: column; /* Stacks the UL vertically */
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0px;
+
+    display: flex;
+    flex-direction: column; /* Stacks LI items vertically */
+    justify-content: space-evenly; /* Distributes items evenly in the available space */
+    align-items: center; /* Centers them horizontally */
+    height: 100%; /* Ensures the list fills the navbar height */
+}
+
+.navbar li {
+    white-space: nowrap;
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: 2.5rem; /* Slightly larger usually looks better in vertical lists */
+    color: #1e1e1c;
+    filter: drop-shadow(5px 5px 1px #ebe78e);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.navbar li:hover {
+    transform: scale(1.1); /* Adds a little pop when hovering */
+}
