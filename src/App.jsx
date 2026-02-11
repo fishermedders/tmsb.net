@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Home from "./pages/home/Home.jsx";
+import Home from "./pages/Home/Home.jsx";
 
 function NavigationWrapper() {
   const location = useLocation();
