@@ -16,6 +16,7 @@
     left: 0;
     width: 100%;
     height: 30vw;
+    overflow: none;
 }
 
 .hero-clouds img {
@@ -32,7 +33,6 @@
 .hero-logo img {
     position: absolute;
     width: 50vw;
-    eleft: 50%;
     transform: translateX(-50%);
 }
 

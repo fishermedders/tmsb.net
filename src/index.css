@@ -8,3 +8,25 @@
 body {
     margin: var(--border-frame-size);
 }
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* This disables both vertical and horizontal scrolling */
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.stage {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden; /* This forces iOS to clip the flying images */
+}
