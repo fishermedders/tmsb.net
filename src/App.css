@@ -1,6 +1,6 @@
 .hero-sky {
     width: 100%;
-    height: 20vw;
+    height: 30vw;
     background: linear-gradient(#87aac0, #9bceaf);
 }
 
@@ -12,7 +12,7 @@
 
 .hero-clouds {
     position: absolute;
-    top: 0;
+    top: 30;
     left: 0;
     width: 100%;
     height: 30vw;
@@ -84,7 +84,7 @@
 
 @keyframes cloudsDown {
     100% {
-        top: 0;
+        top: 40px;
     }
 }
 
@@ -108,4 +108,33 @@
         left: 50%;
         transform: translateX(-50%);
     }
+}
+
+.navbar {
+    position: absolute;
+    top: calc(30vw);
+    width: 100%;
+    /* Remove display: inline; */
+    margin-top: 80px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    /* The Flexbox Magic */
+    display: flex;
+    justify-content: center; /* Centers items horizontally */
+    flex-wrap: wrap; /* Allows items to move to a new line */
+    gap: 20px; /* Adds space between your items */
+}
+
+.navbar li {
+    /* display: inline-block; is no longer needed with flex */
+    white-space: nowrap; /* Keeps "Tour/Tix" on one line inside the item */
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: 2rem;
+    color: #1e1e1c;
+    filter: drop-shadow(5px 5px 1px #ebe78e);
 }

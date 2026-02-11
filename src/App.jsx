@@ -13,6 +13,15 @@ function App() {
         <img src="/assets/tour-logo.png" />
         <img src="/assets/tour-plane.png" />
       </div>
+      <nav className="navbar">
+        <ul>
+          <li>Home</li>
+          <li>Tour/Tix</li>
+          <li>Merch</li>
+          <li>Booking</li>
+          <li>Gallery</li>
+        </ul>
+      </nav>
     </>
   );
 }
