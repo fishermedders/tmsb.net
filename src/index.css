@@ -7,6 +7,7 @@
 
 body {
     margin: var(--border-frame-size);
+    background: url("/assets/hero-background.jpg");
 }
 
 html,
@@ -15,6 +16,8 @@ body {
     padding: 0;
     width: 100%;
     /* Remove height: 100% and overflow: hidden */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox, Safari 18.2+, Chromium 121+ */
 }
 
 .stage {
@@ -39,5 +42,12 @@ main {
 }
 
 main {
-    padding: 20px;
+    margin-top: 50vw;
+    position: relative;
+    background-color: red;
+    min-height: calc(100vh - 50vw - 15px);
+    padding-left: var(--border-frame-size);
+    padding-right: var(--border-frame-size);
+    display: flex;
+    flex-direction: column;
 }

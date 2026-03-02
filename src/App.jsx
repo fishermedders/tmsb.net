@@ -23,7 +23,6 @@ function App() {
     <>
       <div className="stage">
         <div className="hero-sky"></div>
-        <div className="hero-background"></div>
         <div className="hero-clouds">
           <img src="/assets/hero-clouds.png"></img>
         </div>
@@ -33,6 +32,7 @@ function App() {
         </div>
         <NavigationWrapper />
         <main>
+          <h1>hello</h1>
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>
