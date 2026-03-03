@@ -1,0 +1,205 @@
+/* =====================
+   SHOW DETAIL PAGE
+   ===================== */
+
+.show-detail-page {
+    padding: 1rem 0.75rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/*
+  The header reuses .show-card from Tour.css (which is globally available
+  since Tour.jsx is imported in App.jsx). This selector only overrides
+  what needs to differ on the detail view — no hover/cursor since it
+  isn't a link target itself.
+*/
+.show-detail-header {
+    cursor: default;
+}
+
+.show-detail-header:hover {
+    border-color: rgba(235, 231, 142, 0.18);
+    background: rgba(18, 18, 16, 0.68);
+}
+
+/* =====================
+   MDX PROSE CONTAINER
+   ===================== */
+
+.show-detail-content {
+    background: rgba(18, 18, 16, 0.58);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(235, 231, 142, 0.12);
+    border-radius: 14px;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    color: rgba(245, 243, 232, 0.82);
+    line-height: 1.75;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+/* =====================
+   MDX TYPOGRAPHY
+   ===================== */
+
+.show-detail-content h1,
+.show-detail-content h2,
+.show-detail-content h3,
+.show-detail-content h4 {
+    font-family: "Rubik Bubbles", sans-serif;
+    color: #f5f3e8;
+    line-height: 1.2;
+    margin: 1.6em 0 0.5em;
+}
+
+.show-detail-content h1 { font-size: clamp(1.5rem, 4vw, 2rem); }
+.show-detail-content h2 { font-size: clamp(1.2rem, 3vw, 1.6rem); }
+.show-detail-content h3 { font-size: clamp(1rem, 2.5vw, 1.25rem); }
+.show-detail-content h4 { font-size: 1rem; }
+
+/* Remove top margin from the very first heading so it doesn't
+   float away from the card above it. */
+.show-detail-content > :first-child {
+    margin-top: 0;
+}
+
+.show-detail-content p {
+    margin: 0 0 0.85em;
+}
+
+.show-detail-content p:last-child {
+    margin-bottom: 0;
+}
+
+.show-detail-content strong {
+    color: #f5f3e8;
+    font-weight: 700;
+}
+
+.show-detail-content em {
+    color: rgba(235, 231, 142, 0.8);
+    font-style: italic;
+}
+
+.show-detail-content a {
+    color: #ebe78e;
+    text-decoration: underline;
+    text-decoration-color: rgba(235, 231, 142, 0.4);
+    text-underline-offset: 3px;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.show-detail-content a:hover {
+    color: #f5f1a0;
+    text-decoration-color: rgba(245, 241, 160, 0.7);
+}
+
+.show-detail-content ul,
+.show-detail-content ol {
+    margin: 0 0 0.85em 1.4em;
+    padding: 0;
+}
+
+.show-detail-content li {
+    margin-bottom: 0.3em;
+}
+
+.show-detail-content hr {
+    border: none;
+    border-top: 1px solid rgba(235, 231, 142, 0.15);
+    margin: 1.75em 0;
+}
+
+/* =====================
+   INLINE TABLE (e.g. set times)
+   ===================== */
+
+.show-detail-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    font-size: 0.9em;
+}
+
+.show-detail-content th,
+.show-detail-content td {
+    text-align: left;
+    padding: 0.45em 0.75em;
+    border-bottom: 1px solid rgba(235, 231, 142, 0.1);
+    color: rgba(245, 243, 232, 0.75);
+}
+
+.show-detail-content th {
+    font-family: "Rubik Bubbles", sans-serif;
+    color: #ebe78e;
+    font-size: 0.8em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom-color: rgba(235, 231, 142, 0.25);
+}
+
+.show-detail-content tr:last-child td {
+    border-bottom: none;
+}
+
+/* =====================
+   BLOCKQUOTE
+   ===================== */
+
+.show-detail-content blockquote {
+    margin: 1em 0;
+    padding: 0.75em 1.25em;
+    border-left: 3px solid rgba(235, 231, 142, 0.4);
+    background: rgba(235, 231, 142, 0.05);
+    border-radius: 0 8px 8px 0;
+    color: rgba(245, 243, 232, 0.65);
+    font-style: italic;
+}
+
+/* =====================
+   NOT-FOUND STATE
+   ===================== */
+
+.show-not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem 1rem;
+    color: rgba(245, 243, 232, 0.65);
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.show-not-found-link {
+    color: #ebe78e;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.45em 1em;
+    border: 1.5px solid rgba(235, 231, 142, 0.4);
+    border-radius: 999px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.show-not-found-link:hover {
+    background: rgba(235, 231, 142, 0.1);
+    border-color: rgba(235, 231, 142, 0.7);
+}
+
+/* =====================
+   MOBILE
+   ===================== */
+
+@media (max-width: 580px) {
+    .show-detail-page {
+        padding: 1rem 0 2.5rem;
+    }
+
+    .show-detail-content {
+        border-radius: 10px;
+    }
+}

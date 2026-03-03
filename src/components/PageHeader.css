@@ -1,0 +1,117 @@
+/* =====================
+   PAGE HEADER
+   A 3-column grid row:  [back btn] | [title] | [right slot]
+   The title is always genuinely centred regardless of how
+   wide the back button is, because each column is 1fr / auto / 1fr.
+   ===================== */
+
+.page-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0.75rem 0 0.25rem;
+    /* horizontal padding matches the show-list padding so
+       the back button's left edge lines up with the cards */
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+/* =====================
+   BACK BUTTON
+   ===================== */
+
+.page-header-back {
+    grid-column: 1;
+    justify-self: start; /* hug the left edge */
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    color: #1e1e1c;
+    text-decoration: none;
+    white-space: nowrap;
+
+    background: rgba(235, 231, 142, 0.55);
+    border: 1.5px solid rgba(235, 231, 142, 0.9);
+    padding: 0.45em 1em 0.45em 0.8em;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.page-header-back:hover {
+    transform: translateY(-2px) scale(1.04);
+    background: rgba(235, 231, 142, 0.82);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.22);
+}
+
+.page-header-back:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+/* =====================
+   TITLE
+   ===================== */
+
+.page-header-title {
+    grid-column: 2;
+
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: #1e1e1c;
+    filter: drop-shadow(3px 3px 0px #ebe78e);
+    margin: 0;
+    text-align: center;
+    line-height: 1.1;
+}
+
+/* =====================
+   RIGHT SLOT  (reserved for future actions)
+   ===================== */
+
+.page-header-right {
+    grid-column: 3;
+    justify-self: end;
+}
+
+/* =====================
+   NO-TITLE VARIANT
+   When there is no title, collapse the centre column and
+   let the back button span naturally from the left.
+   ===================== */
+
+.page-header--no-title {
+    grid-template-columns: auto;
+}
+
+.page-header--no-title .page-header-back {
+    grid-column: 1;
+}
+
+/* =====================
+   MOBILE
+   ===================== */
+
+@media (max-width: 580px) {
+    .page-header {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .page-header-title {
+        /* Give the title a bit of breathing room from the back pill.
+           The 1fr columns handle most of this, but a small max-width
+           prevents very long titles from colliding with the button. */
+        max-width: 55vw;
+        font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+}

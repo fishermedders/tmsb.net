@@ -16,6 +16,9 @@ export default function Home() {
         <li>
           <a href="/gallery">Gallery</a>
         </li>
+        <li>
+          <a href="/about">About</a>
+        </li>
       </ul>
     </nav>
   );

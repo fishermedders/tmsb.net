@@ -1,40 +1,50 @@
+/*
+  The navbar fills all remaining vertical space below the hero.
+  flex: 1 here works because main (its parent) is also a flex
+  column with flex: 1, so the full remaining viewport height is
+  passed down reliably without relying on percentage height quirks.
+*/
 .navbar {
-    width: 100%;
-    /* Ensure it takes all available vertical space */
     flex: 1;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .navbar ul {
-    list-style-type: none;
-    padding: 0;
+    flex: 1;
+    list-style: none;
+    padding: clamp(1.25rem, 5vh, 4rem) 0;
     margin: 0;
 
     display: flex;
     flex-direction: column;
-    /* This distributes the links evenly */
     justify-content: space-evenly;
     align-items: center;
-
-    /* This is the key: Force the list to fill the nav */
-    height: 100%;
-    min-height: 100%;
 }
 
-/* 3. Style your links */
 .navbar li {
     white-space: nowrap;
     font-family: "Rubik Bubbles", sans-serif;
-    font-size: 2.5rem;
+    /*
+      clamp(min, preferred, max)
+      - floor of 2rem keeps links readable on small phones
+      - 6vw scales naturally with the viewport
+      - ceiling of 4rem prevents comically large text on wide screens
+    */
+    font-size: clamp(2rem, 6vw, 4rem);
     color: #1e1e1c;
     filter: drop-shadow(5px 5px 1px #ebe78e);
     cursor: pointer;
     transition: transform 0.2s ease;
-
-    /* Optional: ensures the clickable area is nice and large */
     display: flex;
     align-items: center;
+}
+
+/* Strip browser default link styling so the li colour and font apply cleanly */
+.navbar a {
+    text-decoration: none;
+    color: inherit;
 }
 
 .navbar li:hover {

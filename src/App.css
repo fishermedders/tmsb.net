@@ -1,110 +1,108 @@
-.hero-sky {
+/* =====================
+   HERO
+   ===================== */
+
+/*
+  The hero is a normal-flow flex column.
+  Its background gradient IS the sky, so it covers
+  both the logo/plane area and blends into the clouds.
+*/
+.hero {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    height: 30vw;
     background: linear-gradient(to bottom, #87aac0, #9bceaf, transparent);
-    background-size:
-        100% auto,
-        cover;
-    position: absolute;
 }
 
+/*
+  Upper sky area — gives the logo and plane room to live.
+  overflow: hidden clips the fly-in animations at the container edges
+  so there's no horizontal scrollbar during the entrance animations.
+*/
+.hero-sky-area {
+    position: relative;
+    height: clamp(240px, 40vw, 380px);
+    overflow: hidden;
+    width: 100%;
+    max-width: 935px;
+    margin: 0 auto;
+}
+
+/* Clouds — near the top of the sky area with a small gap above,
+   sitting behind both the logo and the plane (z-index: 1) */
 .hero-clouds {
     position: absolute;
-    top: 30;
-    left: 0;
-    width: 100%;
-    height: 30vw;
-    overflow: none;
+    top: 20%;
+    left: 50%;
+    width: 65%;
+    z-index: 1;
+    animation: cloudsReveal 1.5s ease-out both;
 }
 
 .hero-clouds img {
+    display: block;
     width: 100%;
-    justify-self: center;
 }
 
+/* Logo — centered in the sky area, flies in from the right, above clouds */
 .hero-logo {
     position: absolute;
-    width: 100%;
-    left: 0;
-    top: calc(var(--border-frame-size) + 25px);
+    width: 80%;
+    max-width: 300px;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    animation: flyInFromRight 2s ease-out 0.4s both;
 }
 
-.hero-logo img {
+/* Plane — centered in the sky area, flies in from the left, on top of everything */
+.hero-plane {
     position: absolute;
-    width: 50vw;
-    transform: translateX(-50%);
+    width: 80%;
+    max-width: 300px;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+    animation: flyInFromLeft 1.8s ease-out 0.2s both;
 }
 
-@keyframes flyIn {
-    0% {
-        left: 100vw;
-        transform: translateX(0%);
+/* =====================
+   KEYFRAMES
+   ===================== */
+
+/*
+  Using transform-only animations keeps these on the GPU compositor
+  thread, avoiding layout recalculations on every frame.
+
+  The calc() offsets account for the element's own translate(-50%)
+  so the starting position is genuinely off-screen regardless of
+  the container's width.
+*/
+@keyframes flyInFromLeft {
+    from {
+        transform: translate(calc(-100vw - 50%), -50%);
     }
-    100% {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
-/* 1. Clouds: Fly in from the top */
-.hero-clouds {
-    position: absolute;
-    top: -100%; /* Start above the screen */
-    left: 0;
-    width: 100%;
-    height: 30vw;
-    animation: cloudsDown 1.5s ease-out forwards;
-}
-
-/* 2. Logo (First Image): Fly in from the left */
-.hero-logo img:nth-child(1) {
-    position: absolute;
-    width: 50vw;
-    left: -100vw; /* Start off-screen to the left */
-    animation: planeIn 1.8s ease-out 0.2s forwards; /* Added 0.2s delay */
-}
-
-/* 3. Plane (Second Image): Fly in from the right (Our previous fix) */
-.hero-logo img:nth-child(2) {
-    position: absolute;
-    width: 50vw;
-    left: 100vw;
-    animation: logoIn 2s ease-out 0.4s forwards; /* Added 0.4s delay */
-}
-
-/* --- Keyframes --- */
-
-@keyframes cloudsDown {
-    100% {
-        top: 40px;
+    to {
+        transform: translate(-50%, -50%);
     }
 }
 
-@keyframes logoIn {
-    0% {
-        left: -100vw;
-        transform: translateX(0%);
+@keyframes flyInFromRight {
+    from {
+        transform: translate(calc(100vw - 50%), -50%);
     }
-    100% {
-        left: 50%;
-        transform: translateX(-50%);
+    to {
+        transform: translate(-50%, -50%);
     }
 }
 
-@keyframes planeIn {
-    0% {
-        left: 100vw;
-        transform: translateX(0%);
+@keyframes cloudsReveal {
+    from {
+        transform: translateX(-50%) translateY(-200%);
     }
-    100% {
-        left: 50%;
-        transform: translateX(-50%);
+    to {
+        transform: translateX(-50%) translateY(0);
     }
-}
-
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 100; /* Keeps it above the clouds and logo */
 }

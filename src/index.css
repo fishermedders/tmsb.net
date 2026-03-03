@@ -1,53 +1,65 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap");
 
 :root {
-    --border-frame-size: 15px;
+    --border-frame-size: 0px;
     --border-frame-color: #161614;
 }
 
-body {
-    margin: var(--border-frame-size);
-    background: url("/assets/hero-background.jpg");
-}
+/* =====================
+   RESET
+   ===================== */
 
 html,
 body {
     margin: 0;
     padding: 0;
     width: 100%;
-    /* Remove height: 100% and overflow: hidden */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox, Safari 18.2+, Chromium 121+ */
 }
 
-.stage {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    overflow-x: hidden; /* Hides the plane when it's outside left/right */
-    overflow-y: auto; /* Allows vertical scrolling if content is long */
+body {
+    background: url("/assets/hero-background.jpg") center / cover no-repeat
+        fixed;
 }
+
+/* =====================
+   LAYOUT SHELL
+   ===================== */
 
 #root {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
 }
 
-nav,
+/*
+  .stage is a flex column so that <main> can use flex: 1 to claim
+  exactly the remaining viewport height after the hero — making it
+  trivial to know how much space is available for the links section.
+*/
+.stage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* fallback for older browsers */
+    min-height: 100dvh; /* accounts for mobile browser chrome (address bar, nav bar) */
+    overflow-x: hidden;
+}
+
+/* =====================
+   MAIN CONTENT
+   ===================== */
+
+/*
+  flex: 1 fills whatever vertical space the hero doesn't consume.
+  The navbar inside uses flex: 1 as well, so it can distribute
+  links evenly across the full remaining height.
+*/
 main {
+    flex: 1;
+    width: 100%;
     max-width: 935px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-main {
-    margin-top: 50vw;
-    position: relative;
-    background-color: red;
-    min-height: calc(100vh - 50vw - 15px);
-    padding-left: var(--border-frame-size);
-    padding-right: var(--border-frame-size);
+    margin: 0 auto;
+    padding: 0 var(--border-frame-size);
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
 }
