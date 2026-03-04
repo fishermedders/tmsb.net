@@ -1,0 +1,17 @@
+{
+  "name": "tmsb.net",
+  "short_name": "TMSB",
+  "description": "The Maple Street Band",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#87aac0",
+  "theme_color": "#87aac0",
+  "icons": [
+    {
+      "src": "/assets/favicon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
