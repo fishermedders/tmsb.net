@@ -172,6 +172,11 @@
     color: #ebe78e;
 }
 
+.contact-link-icon--youtube {
+    background: rgba(255, 70, 70, 0.15);
+    color: #ff7070;
+}
+
 /* ── Text stack ── */
 
 .contact-link-info {
