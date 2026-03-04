@@ -1,15 +1,7 @@
 import { Link } from "react-router-dom";
-import { shows } from "../shows/index.js";
+import { shows, dateFromSlug } from "../shows/index.js";
 import PageHeader from "../components/PageHeader.jsx";
 import "./Tour.css";
-
-/** Parse a Date from the YYMMDD prefix of a show slug. */
-function dateFromSlug(slug) {
-  const m = slug.match(/^(\d{2})(\d{2})(\d{2})/);
-  if (!m) return new Date(0);
-  const [, yy, mm, dd] = m;
-  return new Date(`20${yy}-${mm}-${dd}`);
-}
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);

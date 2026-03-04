@@ -19,6 +19,17 @@ export const shows = Object.entries(modules)
   .sort((a, b) => a.slug.localeCompare(b.slug));
 
 /**
+ * Parse a Date from the YYMMDD prefix of a show slug.
+ * e.g. "260306_cloud_storm_cellar" → new Date("2026-03-06")
+ */
+export function dateFromSlug(slug) {
+  const m = slug.match(/^(\d{2})(\d{2})(\d{2})/);
+  if (!m) return new Date(0);
+  const [, yy, mm, dd] = m;
+  return new Date(`20${yy}-${mm}-${dd}`);
+}
+
+/**
  * Look up a single show by its slug.
  * Returns undefined if the slug doesn't match any file.
  */
