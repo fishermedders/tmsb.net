@@ -6,6 +6,7 @@ import ShowDetail from "./pages/ShowDetail.jsx";
 import Gallery from "./pages/Gallery.jsx";
 import Contact from "./pages/Contact.jsx";
 import About from "./pages/About.jsx";
+import Merch from "./pages/Merch.jsx";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/merch" element={<Merch />} />
         </Routes>
       </main>
     </div>

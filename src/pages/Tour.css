@@ -10,6 +10,65 @@
 }
 
 /* =====================
+   PAST SHOWS SECTION
+   ===================== */
+
+.past-shows-heading {
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    color: rgba(245, 243, 232, 0.35);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 2.5rem 0 0.75rem;
+    position: relative;
+}
+
+/* Faded rule lines flanking the heading */
+.past-shows-heading::before,
+.past-shows-heading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 20%;
+    height: 1px;
+    background: rgba(245, 243, 232, 0.12);
+}
+
+.past-shows-heading::before {
+    right: calc(50% + 0.6em + 0.5 * var(--heading-width, 8ch));
+}
+.past-shows-heading::after {
+    left: calc(50% + 0.6em + 0.5 * var(--heading-width, 8ch));
+}
+
+/* Past show cards — subtly dimmed */
+.show-list--past .show-card {
+    opacity: 0.45;
+    transition:
+        opacity 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.show-list--past .show-card:hover {
+    opacity: 0.75;
+}
+
+/* =====================
+   EMPTY STATE
+   ===================== */
+
+.no-shows {
+    list-style: none;
+    text-align: center;
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    color: rgba(245, 243, 232, 0.4);
+    padding: 2rem 1rem;
+}
+
+/* =====================
    SHOW LIST
    ===================== */
 

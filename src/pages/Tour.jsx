@@ -3,6 +3,23 @@ import { shows } from "../shows/index.js";
 import PageHeader from "../components/PageHeader.jsx";
 import "./Tour.css";
 
+/** Parse a Date from the YYMMDD prefix of a show slug. */
+function dateFromSlug(slug) {
+  const m = slug.match(/^(\d{2})(\d{2})(\d{2})/);
+  if (!m) return new Date(0);
+  const [, yy, mm, dd] = m;
+  return new Date(`20${yy}-${mm}-${dd}`);
+}
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const publicShows = shows.filter((s) => !s.privateEvent);
+const upcomingShows = publicShows.filter((s) => dateFromSlug(s.slug) >= today);
+const pastShows = publicShows
+  .filter((s) => dateFromSlug(s.slug) < today)
+  .reverse(); // newest first
+
 function ShowCard({ show }) {
   const hasTicketContent =
     show.soldOut || show.ticketsComingSoon || !!show.ticketUrl;
@@ -77,11 +94,25 @@ export default function Tour() {
   return (
     <div className="tour-page">
       <PageHeader title="Tour Dates" backTo="/" backLabel="← Home" />
+
       <ul className="show-list">
-        {shows.map((show) => (
-          <ShowCard key={show.slug} show={show} />
-        ))}
+        {upcomingShows.length > 0 ? (
+          upcomingShows.map((show) => <ShowCard key={show.slug} show={show} />)
+        ) : (
+          <li className="no-shows">No upcoming shows — check back soon!</li>
+        )}
       </ul>
+
+      {pastShows.length > 0 && (
+        <>
+          <h2 className="past-shows-heading">Past Shows</h2>
+          <ul className="show-list show-list--past">
+            {pastShows.map((show) => (
+              <ShowCard key={show.slug} show={show} />
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 }
