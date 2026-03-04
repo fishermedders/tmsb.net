@@ -10,6 +10,43 @@
 }
 
 /* =====================
+   SHOW INDICATORS
+   (notes / gallery badges on past cards)
+   ===================== */
+
+.show-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+}
+
+.show-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    padding: 0.2em 0.55em;
+    border-radius: 999px;
+    border: 1px solid;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.show-indicator--notes {
+    color: rgba(245, 243, 232, 0.55);
+    border-color: rgba(245, 243, 232, 0.18);
+    background: rgba(245, 243, 232, 0.05);
+}
+
+.show-indicator--gallery {
+    color: rgba(235, 231, 142, 0.7);
+    border-color: rgba(235, 231, 142, 0.25);
+    background: rgba(235, 231, 142, 0.06);
+}
+
+/* =====================
    PAST SHOWS SECTION
    ===================== */
 
@@ -44,7 +81,7 @@
 
 /* Past show cards — subtly dimmed */
 .show-list--past .show-card {
-    opacity: 0.45;
+    opacity: 0.65;
     transition:
         opacity 0.2s ease,
         border-color 0.2s ease,
@@ -52,7 +89,7 @@
 }
 
 .show-list--past .show-card:hover {
-    opacity: 0.75;
+    opacity: 0.85;
 }
 
 /* =====================

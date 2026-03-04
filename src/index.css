@@ -19,8 +19,16 @@ body {
 }
 
 body {
-    background: url("/assets/hero-background.jpg") center / cover no-repeat
-        fixed;
+    background: url("/assets/hero-background.jpg") repeat center top / auto;
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
 }
 
 /* =====================

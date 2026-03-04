@@ -1,9 +1,12 @@
 import { useParams, Link } from "react-router-dom";
 import { getShowBySlug } from "../shows/index.js";
 import PageHeader from "../components/PageHeader.jsx";
+import PicflowGallery from "../components/PicflowGallery.jsx";
 import "./ShowDetail.css";
 
 export default function ShowDetail() {
+  // picflow.com
+  // document.querySelector("[name=embed-badge]").remove();
   const { slug } = useParams();
   const show = getShowBySlug(slug);
 
@@ -18,7 +21,7 @@ export default function ShowDetail() {
     );
   }
 
-  const { Content } = show;
+  const { Content, hasContent, galleryId } = show;
   const hasTicketContent =
     show.soldOut || show.ticketsComingSoon || !!show.ticketUrl;
 
@@ -92,8 +95,19 @@ export default function ShowDetail() {
 
       {/* MDX body */}
       <div className="show-detail-content">
-        <Content />
+        {hasContent ? (
+          <Content />
+        ) : (
+          <p className="show-detail-empty">No details found about this gig.</p>
+        )}
       </div>
+
+      {/* Picflow photo gallery — only rendered when galleryId is set */}
+      {galleryId && (
+        <div className="show-detail-gallery">
+          <PicflowGallery id={galleryId} />
+        </div>
+      )}
     </div>
   );
 }

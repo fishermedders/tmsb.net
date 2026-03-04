@@ -54,10 +54,18 @@
     margin: 1.6em 0 0.5em;
 }
 
-.show-detail-content h1 { font-size: clamp(1.5rem, 4vw, 2rem); }
-.show-detail-content h2 { font-size: clamp(1.2rem, 3vw, 1.6rem); }
-.show-detail-content h3 { font-size: clamp(1rem, 2.5vw, 1.25rem); }
-.show-detail-content h4 { font-size: 1rem; }
+.show-detail-content h1 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+.show-detail-content h2 {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+.show-detail-content h3 {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+.show-detail-content h4 {
+    font-size: 1rem;
+}
 
 /* Remove top margin from the very first heading so it doesn't
    float away from the card above it. */
@@ -88,7 +96,9 @@
     text-decoration: underline;
     text-decoration-color: rgba(235, 231, 142, 0.4);
     text-underline-offset: 3px;
-    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    transition:
+        color 0.15s ease,
+        text-decoration-color 0.15s ease;
 }
 
 .show-detail-content a:hover {
@@ -159,6 +169,33 @@
 }
 
 /* =====================
+   EMPTY CONTENT STATE
+   ===================== */
+
+.show-detail-empty {
+    margin: 0;
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    color: rgba(245, 243, 232, 0.35);
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* =====================
+   GALLERY
+   ===================== */
+
+.show-detail-gallery {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(235, 231, 142, 0.18);
+    background: rgba(18, 18, 16, 0.68);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0 1.25rem;
+}
+
+/* =====================
    NOT-FOUND STATE
    ===================== */
 
@@ -182,7 +219,9 @@
     padding: 0.45em 1em;
     border: 1.5px solid rgba(235, 231, 142, 0.4);
     border-radius: 999px;
-    transition: background 0.15s ease, border-color 0.15s ease;
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
 }
 
 .show-not-found-link:hover {
@@ -196,7 +235,7 @@
 
 @media (max-width: 580px) {
     .show-detail-page {
-        padding: 1rem 0 2.5rem;
+        padding: 1rem 1rem 2.5rem;
     }
 
     .show-detail-content {

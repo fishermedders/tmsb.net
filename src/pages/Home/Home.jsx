@@ -106,7 +106,7 @@ const NAV_ITEMS = [
   { to: "/tour", label: "Tour / Tix", Icon: IconTour, iconMod: "tour" },
   { to: "/merch", label: "Merch", Icon: IconMerch, iconMod: "merch" },
   { to: "/contact", label: "Contact", Icon: IconContact, iconMod: "contact" },
-  //{ to: "/gallery", label: "Gallery", Icon: IconGallery, iconMod: "gallery" },
+  { to: "/gallery", label: "Gallery", Icon: IconGallery, iconMod: "gallery" },
   { to: "/about", label: "About", Icon: IconAbout, iconMod: "about" },
 ];
 
