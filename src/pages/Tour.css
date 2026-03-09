@@ -125,7 +125,7 @@
 .show-card {
     position: relative; /* anchor for the full-card overlay link */
     display: grid;
-    grid-template-columns: 4.5rem 1px 1fr auto;
+    grid-template-columns: 3.25rem 4.5rem 1px 1fr auto;
     gap: 0 1.25rem;
     align-items: center;
     background: rgba(18, 18, 16, 0.68);
@@ -164,6 +164,25 @@
 .show-card--sold-out:hover {
     border-color: rgba(235, 231, 142, 0.18);
     background: rgba(18, 18, 16, 0.68);
+}
+
+/* =====================
+   POSTER THUMBNAIL
+   ===================== */
+
+.show-poster-thumb {
+    width: 3.25rem;
+    aspect-ratio: 4 / 5;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.show-poster-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 /* =====================
@@ -338,28 +357,34 @@
 
 @media (max-width: 580px) {
     .show-card {
-        grid-template-columns: auto 1px 1fr;
-        grid-template-rows: auto auto;
+        grid-template-columns: 2.75rem auto 1px 1fr;
         row-gap: 0.85rem;
         padding: 0.9rem 1rem;
     }
 
     /* Explicitly place every child so the auto-placement algorithm
-       never has a chance to reorder them. Without this, grid-row: 1
-       on the divider causes it to claim column 1 first, pushing the
-       date into the 1 px column and the divider to the left. */
-    .show-date {
+       never has a chance to reorder them. */
+    .show-poster-thumb {
         grid-column: 1;
         grid-row: 1;
+        width: 2.75rem;
+        aspect-ratio: 4 / 5;
+        align-self: center;
+        border-radius: 6px;
     }
 
-    .show-divider {
+    .show-date {
         grid-column: 2;
         grid-row: 1;
     }
 
-    .show-info {
+    .show-divider {
         grid-column: 3;
+        grid-row: 1;
+    }
+
+    .show-info {
+        grid-column: 4;
         grid-row: 1;
     }
 

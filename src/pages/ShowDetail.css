@@ -9,6 +9,35 @@
     gap: 1rem;
 }
 
+/* =====================
+   POSTER + HEADER ROW
+   ===================== */
+
+.show-detail-header-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.show-detail-poster {
+    width: 160px;
+    flex-shrink: 0;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    display: block;
+}
+
+/* The show-card inside the header row fills remaining width.
+   Also restore the original 4-column grid (no poster column)
+   since the poster lives outside the card on this page. */
+.show-detail-header-row .show-detail-header {
+    flex: 1;
+    min-width: 0;
+    grid-template-columns: 4.5rem 1px 1fr auto;
+}
+
 /*
   The header reuses .show-card from Tour.css (which is globally available
   since Tour.jsx is imported in App.jsx). This selector only overrides
@@ -235,10 +264,57 @@
 
 @media (max-width: 580px) {
     .show-detail-page {
-        padding: 1rem 1rem 2.5rem;
+        padding: 1rem 0.75rem 2.5rem;
     }
 
     .show-detail-content {
         border-radius: 10px;
+    }
+
+    .show-detail-header-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .show-detail-poster {
+        width: 100%;
+        max-width: 220px;
+        aspect-ratio: 4 / 5;
+        margin: 0 auto;
+        object-fit: cover;
+    }
+
+    /* Reset the grid for the detail header card on mobile.
+       Tour.css places children at explicit column numbers (2, 3, 4…)
+       to leave room for the poster thumbnail that lives inside list
+       cards — but on the detail page the poster is outside the card,
+       so we need a clean 3-column layout with columns reset to 1, 2, 3. */
+    .show-detail-header-row .show-detail-header {
+        grid-template-columns: auto 1px 1fr;
+        grid-template-rows: auto auto;
+        row-gap: 0.85rem;
+    }
+
+    .show-detail-header-row .show-detail-header .show-date {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .show-detail-header-row .show-detail-header .show-divider {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .show-detail-header-row .show-detail-header .show-info {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    .show-detail-header-row .show-detail-header .show-ticket-area {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-content: flex-start;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(235, 231, 142, 0.12);
     }
 }

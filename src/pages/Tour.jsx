@@ -57,6 +57,8 @@ function ShowCard({ show, isPast }) {
   const hasTicketContent =
     show.soldOut || show.ticketsComingSoon || !!show.ticketUrl;
 
+  const posterSrc = show.poster || "/assets/poster_default.jpg";
+
   return (
     <li className={`show-card${show.soldOut ? " show-card--sold-out" : ""}`}>
       <Link
@@ -64,6 +66,10 @@ function ShowCard({ show, isPast }) {
         className="show-card-link"
         aria-label={`Details for ${show.venue}, ${show.month} ${show.day}`}
       />
+
+      <div className="show-poster-thumb">
+        <img src={posterSrc} alt={`${show.venue} poster`} />
+      </div>
 
       <div className="show-date">
         <span className="show-month">{show.month}</span>
