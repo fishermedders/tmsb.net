@@ -22,7 +22,10 @@ export default function ShowDetail() {
   }
 
   const { Content, hasContent, galleryId } = show;
-  const posterSrc = show.poster || "/assets/poster_default.jpg";
+  const posterSrc = show.poster
+    ? `/assets/posters/${show.poster}`
+    : "/assets/poster_default.jpg";
+  const posterAspectRatio = show.posterAspectRatio || "4 / 5";
   const hasTicketContent =
     show.soldOut || show.ticketsComingSoon || !!show.ticketUrl;
 
@@ -36,6 +39,7 @@ export default function ShowDetail() {
           src={posterSrc}
           alt={`${show.venue} poster`}
           className="show-detail-poster"
+          style={{ aspectRatio: posterAspectRatio }}
         />
 
         {/* Header reuses the same grid + class names as the tour list card */}

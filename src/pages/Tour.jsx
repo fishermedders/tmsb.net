@@ -57,7 +57,11 @@ function ShowCard({ show, isPast }) {
   const hasTicketContent =
     show.soldOut || show.ticketsComingSoon || !!show.ticketUrl;
 
-  const posterSrc = show.poster || "/assets/poster_default.jpg";
+  const posterSrc = show.poster
+    ? `/assets/posters/${show.poster}`
+    : "/assets/poster_default.jpg";
+
+  const posterAspectRatio = show.posterAspectRatio || "4 / 5";
 
   return (
     <li className={`show-card${show.soldOut ? " show-card--sold-out" : ""}`}>
@@ -67,7 +71,10 @@ function ShowCard({ show, isPast }) {
         aria-label={`Details for ${show.venue}, ${show.month} ${show.day}`}
       />
 
-      <div className="show-poster-thumb">
+      <div
+        className="show-poster-thumb"
+        style={{ aspectRatio: posterAspectRatio }}
+      >
         <img src={posterSrc} alt={`${show.venue} poster`} />
       </div>
 
