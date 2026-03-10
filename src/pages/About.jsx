@@ -1,11 +1,11 @@
 import PageHeader from "../components/PageHeader.jsx";
-import { shows, dateFromSlug } from "../shows/index.js";
+import { shows, isPastShow } from "../shows/index.js";
 import "./About.css";
 
 const _today = new Date();
 _today.setHours(0, 0, 0, 0);
 const playedCount = shows.filter(
-  (s) => !s.privateEvent && dateFromSlug(s.slug) < _today,
+  (s) => !s.hidden && isPastShow(s.slug, _today),
 ).length;
 
 const MEMBERS = [

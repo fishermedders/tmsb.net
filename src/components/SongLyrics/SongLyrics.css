@@ -1,0 +1,114 @@
+/* =====================
+   SONG LYRICS WRAPPER
+   ===================== */
+
+.song-lyrics {
+    background: rgba(18, 18, 16, 0.58);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(235, 231, 142, 0.12);
+    border-radius: 14px;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    color: rgba(245, 243, 232, 0.82);
+    line-height: 1.75;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.song-lyrics-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.song-lyrics-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.song-lyrics-heading {
+    font-family: "Rubik Bubbles", sans-serif;
+    color: #f5f3e8;
+    line-height: 1.2;
+    margin: 0;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+
+.song-lyrics-empty {
+    margin: 0;
+    color: rgba(245, 243, 232, 0.6);
+}
+
+/* =====================
+   LYRICS TYPOGRAPHY
+   ===================== */
+
+.song-lyrics h1,
+.song-lyrics h2,
+.song-lyrics h3,
+.song-lyrics h4 {
+    font-family: "Rubik Bubbles", sans-serif;
+    color: #f5f3e8;
+    line-height: 1.2;
+    margin: 1.4em 0 0.5em;
+}
+
+.song-lyrics h1 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+}
+.song-lyrics h2 {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+.song-lyrics h3 {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+.song-lyrics h4 {
+    font-size: 1rem;
+}
+
+.song-lyrics > :first-child {
+    margin-top: 0;
+}
+
+.song-lyrics p {
+    margin: 0 0 0.85em;
+}
+
+.song-lyrics p:last-child {
+    margin-bottom: 0;
+}
+
+.song-lyrics strong {
+    color: #f5f3e8;
+    font-weight: 700;
+}
+
+.song-lyrics em {
+    color: rgba(235, 231, 142, 0.8);
+    font-style: italic;
+}
+
+.song-lyrics a {
+    color: #ebe78e;
+    text-decoration: underline;
+    text-decoration-color: rgba(235, 231, 142, 0.4);
+    text-underline-offset: 3px;
+    transition:
+        color 0.15s ease,
+        text-decoration-color 0.15s ease;
+}
+
+.song-lyrics a:hover {
+    color: #f5f1a0;
+    text-decoration-color: rgba(245, 241, 160, 0.7);
+}
+
+/* =====================
+   MOBILE
+   ===================== */
+
+@media (max-width: 580px) {
+    .song-lyrics {
+        border-radius: 10px;
+    }
+}

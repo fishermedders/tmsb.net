@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
-import { shows, dateFromSlug } from "../shows/index.js";
+import { useEffect, useRef } from "react";
+import { Link, useLocation, useNavigationType } from "react-router-dom";
+import { shows, isPastShow } from "../shows/index.js";
 import PageHeader from "../components/PageHeader.jsx";
 import "./Tour.css";
 
@@ -44,14 +45,9 @@ function IconNotes() {
   );
 }
 
-const today = new Date();
-today.setHours(0, 0, 0, 0);
-
-const publicShows = shows.filter((s) => !s.privateEvent);
-const upcomingShows = publicShows.filter((s) => dateFromSlug(s.slug) >= today);
-const pastShows = publicShows
-  .filter((s) => dateFromSlug(s.slug) < today)
-  .reverse(); // newest first
+const visibleShows = shows.filter((s) => !s.hidden);
+const upcomingShows = visibleShows.filter((s) => !isPastShow(s.slug));
+const pastShows = visibleShows.filter((s) => isPastShow(s.slug)).reverse(); // newest first
 
 function ShowCard({ show, isPast }) {
   const hasTicketContent =
@@ -62,6 +58,17 @@ function ShowCard({ show, isPast }) {
     : "/assets/poster_default.jpg";
 
   const posterAspectRatio = show.posterAspectRatio || "4 / 5";
+
+  const metaItems = [];
+  if (show.doors) {
+    metaItems.push(`Doors ${show.doors}`);
+  }
+  if (show.show) {
+    metaItems.push(`Show ${show.show}`);
+  }
+  if (show.ages) {
+    metaItems.push(show.ages);
+  }
 
   return (
     <li className={`show-card${show.soldOut ? " show-card--sold-out" : ""}`}>
@@ -92,17 +99,25 @@ function ShowCard({ show, isPast }) {
           {show.city}, {show.state}
         </p>
         {show.support && <p className="show-support">{show.support}</p>}
-        <div className="show-meta">
-          <span>Doors {show.doors}</span>
-          <span className="meta-dot" aria-hidden="true">
-            ·
-          </span>
-          <span>Show {show.show}</span>
-          <span className="meta-dot" aria-hidden="true">
-            ·
-          </span>
-          <span>{show.ages}</span>
-        </div>
+        {metaItems.length > 0 && (
+          <div className="show-meta">
+            {metaItems.reduce((acc, item, index) => {
+              if (index > 0) {
+                acc.push(
+                  <span
+                    key={`${show.slug}-meta-dot-${index}`}
+                    className="meta-dot"
+                    aria-hidden="true"
+                  >
+                    ·
+                  </span>,
+                );
+              }
+              acc.push(<span key={`${show.slug}-meta-${index}`}>{item}</span>);
+              return acc;
+            }, [])}
+          </div>
+        )}
         {isPast && (show.hasContent || show.galleryId) && (
           <div className="show-indicators">
             {show.hasContent && (
@@ -161,6 +176,35 @@ function ShowCard({ show, isPast }) {
 }
 
 export default function Tour() {
+  const location = useLocation();
+  const navType = useNavigationType();
+  const scrollYRef = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollYRef.current = window.scrollY || 0;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      sessionStorage.setItem("tourScrollY", String(scrollYRef.current));
+    };
+  }, []);
+
+  useEffect(() => {
+    if (navType !== "POP") return;
+
+    const saved = sessionStorage.getItem("tourScrollY");
+    if (!saved) return;
+
+    const y = Number(saved);
+    if (Number.isNaN(y)) return;
+
+    requestAnimationFrame(() => window.scrollTo(0, y));
+  }, [navType, location.key]);
+
   return (
     <div className="tour-page">
       <PageHeader title="Tour Dates" backTo="/" backLabel="← Home" />

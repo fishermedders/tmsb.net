@@ -1,0 +1,134 @@
+/* =====================
+   SONG DETAIL PAGE
+   ===================== */
+
+.song-detail-page {
+    padding: 1rem 0.75rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.song-detail-empty {
+    margin: 0;
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    color: rgba(245, 243, 232, 0.4);
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+/* =====================
+   SECTION CARDS
+   ===================== */
+
+.song-detail-card {
+    background: rgba(18, 18, 16, 0.58);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(235, 231, 142, 0.12);
+    border-radius: 14px;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    color: rgba(245, 243, 232, 0.82);
+    line-height: 1.75;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.song-detail-heading {
+    font-family: "Rubik Bubbles", sans-serif;
+    color: #f5f3e8;
+    line-height: 1.2;
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+
+.song-detail-placeholder {
+    margin: 0;
+    color: rgba(245, 243, 232, 0.6);
+}
+
+/* =====================
+   SHOWS PLAYED LIST
+   ===================== */
+
+.song-detail-show-list {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.song-detail-show-item {
+    margin: 0;
+}
+
+.song-detail-show-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.85rem 1rem;
+
+    background: rgba(18, 18, 16, 0.62);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(235, 231, 142, 0.18);
+    border-radius: 12px;
+
+    text-decoration: none;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.song-detail-show-link:hover {
+    background: rgba(18, 18, 16, 0.8);
+    border-color: rgba(235, 231, 142, 0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+.song-detail-show-link:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.song-detail-show-venue {
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    color: #f5f3e8;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-detail-show-date {
+    font-size: 0.9rem;
+    color: rgba(235, 231, 142, 0.75);
+}
+
+.song-detail-show-location {
+    font-size: 0.85rem;
+    color: rgba(245, 243, 232, 0.55);
+}
+
+/* =====================
+   MOBILE
+   ===================== */
+
+@media (max-width: 580px) {
+    .song-detail-page {
+        padding: 1rem 0.75rem 2.5rem;
+    }
+
+    .song-detail-card {
+        border-radius: 10px;
+    }
+
+    .song-detail-show-link {
+        padding: 0.75rem 0.9rem;
+    }
+}

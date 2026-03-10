@@ -225,6 +225,67 @@
 }
 
 /* =====================
+   SETLIST
+   ===================== */
+
+.show-setlist {
+    background: rgba(18, 18, 16, 0.58);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(235, 231, 142, 0.12);
+    border-radius: 14px;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    color: rgba(245, 243, 232, 0.82);
+}
+
+.show-setlist-heading {
+    font-family: "Rubik Bubbles", sans-serif;
+    color: #f5f3e8;
+    line-height: 1.2;
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+
+.show-setlist-empty {
+    margin: 0;
+    color: rgba(245, 243, 232, 0.55);
+}
+
+.show-setlist-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+}
+
+.show-setlist-item {
+    margin: 0;
+}
+
+.show-setlist-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+    color: #ebe78e;
+    text-decoration: none;
+    text-decoration-color: rgba(235, 231, 142, 0.35);
+    text-underline-offset: 3px;
+    transition:
+        color 0.15s ease,
+        text-decoration-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.show-setlist-link:hover {
+    color: #f5f1a0;
+    text-decoration-color: rgba(245, 241, 160, 0.7);
+    transform: translateX(2px);
+}
+
+/* =====================
    NOT-FOUND STATE
    ===================== */
 

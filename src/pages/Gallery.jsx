@@ -8,7 +8,7 @@ const today = new Date();
 today.setHours(0, 0, 0, 0);
 
 const galleryShows = shows
-  .filter((s) => !s.privateEvent && s.galleryId)
+  .filter((s) => !s.hidden && s.galleryId)
   .sort((a, b) => b.slug.localeCompare(a.slug)); // newest first
 
 export default function Gallery() {

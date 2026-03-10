@@ -1,8 +1,16 @@
 import { useParams, Link } from "react-router-dom";
-import { getShowBySlug } from "../shows/index.js";
+import { getShowBySlug, isPastShow } from "../shows/index.js";
 import PageHeader from "../components/PageHeader.jsx";
 import PicflowGallery from "../components/PicflowGallery.jsx";
 import "./ShowDetail.css";
+
+function slugifySong(title) {
+  return title
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+}
 
 export default function ShowDetail() {
   // picflow.com
@@ -28,6 +36,19 @@ export default function ShowDetail() {
   const posterAspectRatio = show.posterAspectRatio || "4 / 5";
   const hasTicketContent =
     show.soldOut || show.ticketsComingSoon || !!show.ticketUrl;
+
+  const isPast = isPastShow(show.slug);
+
+  const metaItems = [];
+  if (show.doors) {
+    metaItems.push(`Doors ${show.doors}`);
+  }
+  if (show.show) {
+    metaItems.push(`Show ${show.show}`);
+  }
+  if (show.ages) {
+    metaItems.push(show.ages);
+  }
 
   return (
     <div className="show-detail-page">
@@ -66,17 +87,27 @@ export default function ShowDetail() {
               {show.city}, {show.state}
             </p>
             {show.support && <p className="show-support">{show.support}</p>}
-            <div className="show-meta">
-              <span>Doors {show.doors}</span>
-              <span className="meta-dot" aria-hidden="true">
-                ·
-              </span>
-              <span>Show {show.show}</span>
-              <span className="meta-dot" aria-hidden="true">
-                ·
-              </span>
-              <span>{show.ages}</span>
-            </div>
+            {metaItems.length > 0 && (
+              <div className="show-meta">
+                {metaItems.reduce((acc, item, index) => {
+                  if (index > 0) {
+                    acc.push(
+                      <span
+                        key={`${show.slug}-meta-dot-${index}`}
+                        className="meta-dot"
+                        aria-hidden="true"
+                      >
+                        ·
+                      </span>,
+                    );
+                  }
+                  acc.push(
+                    <span key={`${show.slug}-meta-${index}`}>{item}</span>,
+                  );
+                  return acc;
+                }, [])}
+              </div>
+            )}
           </div>
 
           {hasTicketContent && (
@@ -114,9 +145,33 @@ export default function ShowDetail() {
         {hasContent ? (
           <Content />
         ) : (
-          <p className="show-detail-empty">No details found about this gig.</p>
+          <p className="show-detail-empty">
+            {isPast
+              ? "No details found about this gig."
+              : "Details will be posted after the show."}
+          </p>
         )}
       </div>
+
+      <section className="show-setlist">
+        <h2 className="show-setlist-heading">Setlist</h2>
+        {show.setlist && show.setlist.length > 0 ? (
+          <ul className="show-setlist-list">
+            {show.setlist.map((song) => (
+              <li key={song} className="show-setlist-item">
+                <Link
+                  to={`/songs/${slugifySong(song)}`}
+                  className="show-setlist-link"
+                >
+                  {song}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="show-setlist-empty">Setlist coming soon.</p>
+        )}
+      </section>
 
       {/* Picflow photo gallery — only rendered when galleryId is set */}
       {galleryId && (
