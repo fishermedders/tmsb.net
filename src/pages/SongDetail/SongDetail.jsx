@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import SEO, { JsonLd } from "../../components/SEO.jsx";
 import PageHeader from "../../components/PageHeader.jsx";
 import { shows } from "../../shows/index.js";
 import { getSongBySlug } from "../../songs/index.js";
@@ -30,6 +31,26 @@ export default function SongDetail() {
   const artist = song.artist || "Unknown Artist";
   const author = song.author || null;
   const songKey = normalizeSongTitle(song.title);
+
+  // ── SEO helpers ────────────────────────────────────────────────────────
+  const seoDescription = song.original
+    ? `${song.title} — an original song by The Maple Street Band.`
+    : `${song.title} by ${artist}, as performed by The Maple Street Band.`;
+
+  const musicRecordingJsonLd = song.original
+    ? {
+        "@context": "https://schema.org",
+        "@type": "MusicRecording",
+        name: song.title,
+        byArtist: {
+          "@type": "MusicGroup",
+          name: "The Maple Street Band",
+          url: "https://tmsb.net",
+        },
+        ...(author ? { author: { "@type": "Person", name: author } } : {}),
+        url: `https://tmsb.net/songs/${song.slug}`,
+      }
+    : null;
   const showsPlayed = shows
     .filter(
       (show) =>
@@ -40,6 +61,8 @@ export default function SongDetail() {
 
   return (
     <div className="song-detail-page">
+      <SEO title={song.title} description={seoDescription} />
+      {musicRecordingJsonLd && <JsonLd data={musicRecordingJsonLd} />}
       <PageHeader title={song.title} backTo="/songs" backLabel="← Songs" />
 
       <div className="song-detail-meta">

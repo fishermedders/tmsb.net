@@ -109,6 +109,10 @@
     background: rgba(100, 150, 220, 0.15);
     color: #88b4e8;
 }
+.home-nav-icon--stats {
+    background: rgba(235, 181, 100, 0.15);
+    color: #e8c874;
+}
 
 .home-nav-link:hover .home-nav-icon {
     border-color: rgba(235, 231, 142, 0.3);
@@ -156,6 +160,12 @@
    ===================== */
 
 .home-nav-item--streaming {
+    display: flex;
+    flex-direction: row;
+    gap: 0.6rem;
+}
+
+.home-nav-item--pair {
     display: flex;
     flex-direction: row;
     gap: 0.6rem;

@@ -9,6 +9,7 @@ import Gallery from "./pages/Gallery.jsx";
 import Contact from "./pages/Contact.jsx";
 import About from "./pages/About.jsx";
 import Merch from "./pages/Merch.jsx";
+import Stats from "./pages/Stats/Stats.jsx";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
           <Route path="/merch" element={<Merch />} />
+          <Route path="/stats" element={<Stats />} />
         </Routes>
       </main>
     </div>

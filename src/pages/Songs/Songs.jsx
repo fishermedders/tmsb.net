@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SEO from "../../components/SEO.jsx";
 import PageHeader from "../../components/PageHeader.jsx";
 import { shows } from "../../shows/index.js";
 import { songs as songLibrary } from "../../songs/index.js";
@@ -66,6 +67,10 @@ export default function Songs() {
 
   return (
     <div className="songs-page">
+      <SEO
+        title="Songs"
+        description="Explore the songs The Maple Street Band plays live — originals and covers — with full setlist history and play counts."
+      />
       <PageHeader title="Songs" backTo="/" backLabel="← Home" />
       {songs.length === 0 ? (
         <p>No songs yet — check back after the next show.</p>
