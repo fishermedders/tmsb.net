@@ -19,6 +19,39 @@
 }
 
 /* =====================
+   SONG META (ARTIST / AUTHOR)
+   ===================== */
+
+.song-detail-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: clamp(0.85rem, 3vw, 1.1rem) clamp(1rem, 4vw, 1.5rem);
+
+    background: rgba(18, 18, 16, 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(235, 231, 142, 0.15);
+    border-radius: 14px;
+}
+
+.song-detail-artist {
+    margin: 0;
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(1rem, 2.6vw, 1.2rem);
+    color: rgba(235, 231, 142, 1);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.song-detail-author {
+    margin: 0;
+    font-size: clamp(0.8rem, 2vw, 0.95rem);
+    color: rgba(245, 243, 232, 0.85);
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* =====================
    SECTION CARDS
    ===================== */
 

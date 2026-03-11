@@ -1,6 +1,43 @@
 import { Link } from "react-router-dom";
 import "./Home.css";
 
+function IconSpotify() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.077-.496 9.712 1.115.294.18.386.563.207.857zm1.224-2.72a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.781.781 0 01.52-.972c3.632-1.102 8.147-.568 11.233 1.328a.78.78 0 01.257 1.072zm.105-2.83c-3.223-1.914-8.54-2.09-11.618-1.156a.935.935 0 11-.543-1.79c3.532-1.073 9.404-.866 13.115 1.337a.935.935 0 01-.954 1.609z" />
+    </svg>
+  );
+}
+
+function IconAppleMusic() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      {/* Left note head */}
+      <circle cx="6.5" cy="18.5" r="2.5" />
+      {/* Right note head */}
+      <circle cx="16" cy="16.5" r="2.5" />
+      {/* Left stem */}
+      <rect x="8.8" y="5" width="1.5" height="13.5" />
+      {/* Right stem */}
+      <rect x="18.3" y="3" width="1.5" height="13.5" />
+      {/* Beam connecting the two stems */}
+      <path d="M8.8 5 L19.8 3 L19.8 5.5 L8.8 7.5Z" />
+    </svg>
+  );
+}
+
 function IconTour() {
   return (
     <svg
@@ -135,6 +172,30 @@ export default function Home() {
   return (
     <nav className="home-nav">
       <ul className="home-nav-list">
+        <li className="home-nav-item home-nav-item--streaming">
+          <a
+            href="https://open.spotify.com/artist/7LJmIl49POVePlCqtd96bR"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="home-nav-streaming-link"
+          >
+            <span className="home-nav-icon home-nav-icon--spotify">
+              <IconSpotify />
+            </span>
+            <span className="home-nav-streaming-label">Spotify</span>
+          </a>
+          <a
+            href="https://music.apple.com/us/artist/the-maple-street-band/1830087689"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="home-nav-streaming-link"
+          >
+            <span className="home-nav-icon home-nav-icon--apple-music">
+              <IconAppleMusic />
+            </span>
+            <span className="home-nav-streaming-label">Apple Music</span>
+          </a>
+        </li>
         {NAV_ITEMS.map(({ to, label, Icon, iconMod }) => (
           <li key={to} className="home-nav-item">
             <Link to={to} className="home-nav-link">

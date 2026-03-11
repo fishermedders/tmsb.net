@@ -46,6 +46,12 @@
     background: rgba(235, 231, 142, 0.06);
 }
 
+.show-indicator--setlist {
+    color: rgba(155, 224, 176, 0.75);
+    border-color: rgba(155, 224, 176, 0.25);
+    background: rgba(155, 224, 176, 0.06);
+}
+
 /* =====================
    PAST SHOWS SECTION
    ===================== */

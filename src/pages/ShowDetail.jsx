@@ -1,8 +1,29 @@
 import { useParams, Link } from "react-router-dom";
 import { getShowBySlug, isPastShow } from "../shows/index.js";
+import { isKnownSongTitle } from "../songs/index.js";
 import PageHeader from "../components/PageHeader.jsx";
 import PicflowGallery from "../components/PicflowGallery.jsx";
 import "./ShowDetail.css";
+
+function IconBrokenLink() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+      <line x1="2" y1="2" x2="22" y2="22" />
+    </svg>
+  );
+}
 
 function slugifySong(title) {
   return title
@@ -159,12 +180,27 @@ export default function ShowDetail() {
           <ul className="show-setlist-list">
             {show.setlist.map((song) => (
               <li key={song} className="show-setlist-item">
-                <Link
-                  to={`/songs/${slugifySong(song)}`}
-                  className="show-setlist-link"
-                >
-                  {song}
-                </Link>
+                {isKnownSongTitle(song) ? (
+                  <Link
+                    to={`/songs/${slugifySong(song)}`}
+                    className="show-setlist-link"
+                  >
+                    {song}
+                  </Link>
+                ) : (
+                  <span
+                    className="show-setlist-no-page"
+                    title="No song page yet"
+                  >
+                    {song}
+                    <span
+                      className="show-setlist-broken-icon"
+                      aria-label="No song page"
+                    >
+                      <IconBrokenLink />
+                    </span>
+                  </span>
+                )}
               </li>
             ))}
           </ul>

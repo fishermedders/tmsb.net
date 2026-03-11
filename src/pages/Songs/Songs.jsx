@@ -25,8 +25,8 @@ function buildSongIndex() {
     const artist =
       typeof song.artist === "string" && song.artist.trim().length > 0
         ? song.artist.trim()
-        : typeof song.writer === "string" && song.writer.trim().length > 0
-          ? song.writer.trim()
+        : typeof song.author === "string" && song.author.trim().length > 0
+          ? song.author.trim()
           : "Unknown Artist";
 
     map.set(key, {

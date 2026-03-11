@@ -45,6 +45,29 @@ function IconNotes() {
   );
 }
 
+function IconSetlist() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="8" y1="6" x2="21" y2="6" />
+      <line x1="8" y1="12" x2="21" y2="12" />
+      <line x1="8" y1="18" x2="21" y2="18" />
+      <circle cx="3" cy="6" r="1" fill="currentColor" stroke="none" />
+      <circle cx="3" cy="12" r="1" fill="currentColor" stroke="none" />
+      <circle cx="3" cy="18" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 const visibleShows = shows.filter((s) => !s.hidden);
 const upcomingShows = visibleShows.filter((s) => !isPastShow(s.slug));
 const pastShows = visibleShows.filter((s) => isPastShow(s.slug)).reverse(); // newest first
@@ -118,8 +141,18 @@ function ShowCard({ show, isPast }) {
             }, [])}
           </div>
         )}
-        {isPast && (show.hasContent || show.galleryId) && (
+        {isPast && (show.hasContent || show.galleryId || show.hasSetlist) && (
           <div className="show-indicators">
+            {show.hasSetlist && (
+              <span
+                className="show-indicator show-indicator--setlist"
+                title="Setlist"
+                aria-label="Has setlist"
+              >
+                <IconSetlist />
+                Setlist
+              </span>
+            )}
             {show.hasContent && (
               <span
                 className="show-indicator show-indicator--notes"

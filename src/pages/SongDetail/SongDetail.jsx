@@ -27,7 +27,8 @@ export default function SongDetail() {
   }
 
   const { Content, hasLyrics } = song;
-  const artist = song.artist || song.writer || "Unknown Artist";
+  const artist = song.artist || "Unknown Artist";
+  const author = song.author || null;
   const songKey = normalizeSongTitle(song.title);
   const showsPlayed = shows
     .filter(
@@ -41,7 +42,10 @@ export default function SongDetail() {
     <div className="song-detail-page">
       <PageHeader title={song.title} backTo="/songs" backLabel="← Songs" />
 
-      <p className="song-detail-artist">By {artist}</p>
+      <div className="song-detail-meta">
+        <p className="song-detail-artist">By {artist}</p>
+        {author && <p className="song-detail-author">Written by {author}</p>}
+      </div>
 
       <section className="song-detail-card">
         <SongLyricsSection title="Lyrics">
