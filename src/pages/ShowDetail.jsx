@@ -1,6 +1,14 @@
 import { useParams, Link } from "react-router-dom";
-import { getShowBySlug, isPastShow } from "../shows/index.js";
+import {
+  getShowBySlug,
+  isPastShow,
+  isSetlistHeader,
+  getSetlistHeaderText,
+  splitSetlistEntry,
+  dateFromSlug,
+} from "../shows/index.js";
 import { isKnownSongTitle } from "../songs/index.js";
+import SEO, { JsonLd } from "../components/SEO.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 import PicflowGallery from "../components/PicflowGallery.jsx";
 import "./ShowDetail.css";
@@ -71,8 +79,55 @@ export default function ShowDetail() {
     metaItems.push(show.ages);
   }
 
+  // ── SEO helpers ──────────────────────────────────────────────────────────
+  const showDate = dateFromSlug(show.slug);
+  const isoDate = showDate.toISOString().split("T")[0];
+  const seoTitle = `${show.venue} — ${show.month} ${show.day}, ${show.year}`;
+  const seoDescription = `The Maple Street Band live at ${show.venue} in ${show.city}, ${show.state} — ${show.month} ${show.day}, ${show.year}.${show.support ? ` Supporting ${show.support}.` : ""}`;
+
+  const musicEventJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MusicEvent",
+    name: `The Maple Street Band at ${show.venue}`,
+    startDate: isoDate,
+    location: {
+      "@type": "MusicVenue",
+      name: show.venue,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: show.city,
+        addressRegion: show.state,
+        addressCountry: "US",
+      },
+    },
+    performer: {
+      "@type": "MusicGroup",
+      name: "The Maple Street Band",
+      url: "https://tmsb.net",
+    },
+    url: `https://tmsb.net/tour/${show.slug}`,
+    ...(show.ticketUrl && !show.soldOut
+      ? {
+          offers: {
+            "@type": "Offer",
+            url: show.ticketUrl,
+            availability: "https://schema.org/InStock",
+          },
+        }
+      : show.soldOut
+        ? {
+            offers: {
+              "@type": "Offer",
+              availability: "https://schema.org/SoldOut",
+            },
+          }
+        : {}),
+  };
+
   return (
     <div className="show-detail-page">
+      <SEO title={seoTitle} description={seoDescription} />
+      <JsonLd data={musicEventJsonLd} />
       <PageHeader title={show.venue} backTo="/tour" backLabel="← Tour Dates" />
 
       {/* Poster + show info card side by side */}
@@ -178,31 +233,59 @@ export default function ShowDetail() {
         <h2 className="show-setlist-heading">Setlist</h2>
         {show.setlist && show.setlist.length > 0 ? (
           <ul className="show-setlist-list">
-            {show.setlist.map((song) => (
-              <li key={song} className="show-setlist-item">
-                {isKnownSongTitle(song) ? (
-                  <Link
-                    to={`/songs/${slugifySong(song)}`}
-                    className="show-setlist-link"
-                  >
-                    {song}
-                  </Link>
-                ) : (
-                  <span
-                    className="show-setlist-no-page"
-                    title="No song page yet"
-                  >
-                    {song}
-                    <span
-                      className="show-setlist-broken-icon"
-                      aria-label="No song page"
-                    >
-                      <IconBrokenLink />
+            {show.setlist.map((entry, i) => {
+              // ── Section header (e.g. "h|Set 1") ──────────────────────────
+              if (isSetlistHeader(entry)) {
+                return (
+                  <li key={i} className="show-setlist-header-item">
+                    {getSetlistHeaderText(entry)}
+                  </li>
+                );
+              }
+
+              // ── Medley or regular song ────────────────────────────────────
+              const parts = splitSetlistEntry(entry);
+              return (
+                <li
+                  key={i}
+                  className={`show-setlist-item${parts.length > 1 ? " show-setlist-item--medley" : ""}`}
+                >
+                  {parts.map((part, j) => (
+                    <span key={j} className="show-setlist-part">
+                      {j > 0 && (
+                        <span
+                          className="show-setlist-medley-sep"
+                          aria-hidden="true"
+                        >
+                          ›
+                        </span>
+                      )}
+                      {isKnownSongTitle(part) ? (
+                        <Link
+                          to={`/songs/${slugifySong(part)}`}
+                          className="show-setlist-link"
+                        >
+                          {part}
+                        </Link>
+                      ) : (
+                        <span
+                          className="show-setlist-no-page"
+                          title="No song page yet"
+                        >
+                          {part}
+                          <span
+                            className="show-setlist-broken-icon"
+                            aria-label="No song page"
+                          >
+                            <IconBrokenLink />
+                          </span>
+                        </span>
+                      )}
                     </span>
-                  </span>
-                )}
-              </li>
-            ))}
+                  ))}
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <p className="show-setlist-empty">Setlist coming soon.</p>

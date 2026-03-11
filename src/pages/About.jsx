@@ -1,3 +1,4 @@
+import SEO, { JsonLd } from "../components/SEO.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 import { shows, isPastShow } from "../shows/index.js";
 import "./About.css";
@@ -42,9 +43,62 @@ const STATS = [
   { value: "GA", label: "Home State" },
 ];
 
+const MUSIC_GROUP_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  name: "The Maple Street Band",
+  url: "https://tmsb.net",
+  genre: ["Rock", "Jam", "Funk", "Southern Rock"],
+  foundingDate: "2024",
+  foundingLocation: {
+    "@type": "Place",
+    name: "Saint Simons Island, GA",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Saint Simons Island",
+      addressRegion: "GA",
+      addressCountry: "US",
+    },
+  },
+  member: [
+    {
+      "@type": "OrganizationRole",
+      member: { "@type": "Person", name: "Scott Akins" },
+      roleName: "Vocals",
+    },
+    {
+      "@type": "OrganizationRole",
+      member: { "@type": "Person", name: "Will Theiler" },
+      roleName: "Bass",
+    },
+    {
+      "@type": "OrganizationRole",
+      member: { "@type": "Person", name: "Fisher Medders" },
+      roleName: "Guitar & Vocals",
+    },
+    {
+      "@type": "OrganizationRole",
+      member: { "@type": "Person", name: "Jake Segars" },
+      roleName: "Drums",
+    },
+  ],
+  sameAs: [
+    "https://open.spotify.com/artist/7LJmIl49POVePlCqtd96bR",
+    "https://music.apple.com/us/artist/the-maple-street-band/1830087689",
+    "https://www.instagram.com/themaplestreetband",
+    "https://www.facebook.com/p/The-Maple-Street-Band-61560848357279/",
+    "https://www.youtube.com/@MapleStreetBand",
+  ],
+};
+
 export default function About() {
   return (
     <div className="about-page">
+      <SEO
+        title="About"
+        description="Learn about The Maple Street Band — Scott Akins, Will Theiler, Fisher Medders, and Jake Segars — a four-piece rock, jam, and funk group from Saint Simons Island, GA, formed in 2024."
+      />
+      <JsonLd data={MUSIC_GROUP_JSON_LD} />
       <PageHeader title="About" backTo="/" backLabel="← Home" />
 
       {/* ── Bio + Stats ── */}

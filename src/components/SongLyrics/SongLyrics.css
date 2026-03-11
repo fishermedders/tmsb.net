@@ -1,16 +1,15 @@
 /* =====================
    SONG LYRICS WRAPPER
+   (inner panel — sits inside .song-lyrics-block or .song-detail-card)
    ===================== */
 
 .song-lyrics {
-    background: rgba(18, 18, 16, 0.58);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(235, 231, 142, 0.12);
-    border-radius: 14px;
-    padding: clamp(1.25rem, 4vw, 2rem);
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(235, 231, 142, 0.08);
+    border-radius: 10px;
+    padding: clamp(1rem, 3.5vw, 1.5rem);
     color: rgba(245, 243, 232, 0.82);
-    line-height: 1.75;
+    line-height: 1.9;
     font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
@@ -30,13 +29,17 @@
     font-family: "Rubik Bubbles", sans-serif;
     color: #f5f3e8;
     line-height: 1.2;
-    margin: 0;
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    margin: 0 0 0.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(235, 231, 142, 0.12);
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
 }
 
 .song-lyrics-empty {
     margin: 0;
-    color: rgba(245, 243, 232, 0.6);
+    color: rgba(245, 243, 232, 0.45);
+    font-style: italic;
+    font-size: 0.95rem;
 }
 
 /* =====================
@@ -104,11 +107,110 @@
 }
 
 /* =====================
+   PRE / CODE RESET
+   (code fences used for lyric whitespace preservation)
+   ===================== */
+
+.song-lyrics pre,
+.song-lyrics code {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    white-space: pre-wrap;
+    color: inherit;
+}
+
+/* =====================
+   LYRICS BLOCK  (new MDX format — <Lyrics>)
+   Self-contained outer card
+   ===================== */
+
+.song-lyrics-block {
+    background: rgba(18, 18, 16, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(235, 231, 142, 0.12);
+    border-radius: 14px;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
+}
+
+/* =====================
+   ABOUT BLOCK  (new MDX format — <About>)
+   Left accent bar visually distinguishes it from the lyrics block
+   ===================== */
+
+.song-about-block {
+    background: rgba(18, 18, 16, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(235, 231, 142, 0.15);
+    border-left: 3px solid rgba(235, 231, 142, 0.45);
+    border-radius: 14px;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.28);
+}
+
+.song-about-body {
+    color: rgba(245, 243, 232, 0.82);
+    line-height: 1.8;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.song-about-body p {
+    margin: 0 0 0.85em;
+}
+
+.song-about-body p:last-child {
+    margin-bottom: 0;
+}
+
+.song-about-body strong {
+    color: #f5f3e8;
+    font-weight: 700;
+}
+
+.song-about-body em {
+    color: rgba(235, 231, 142, 0.8);
+    font-style: italic;
+}
+
+.song-about-body a {
+    color: #ebe78e;
+    text-decoration: underline;
+    text-decoration-color: rgba(235, 231, 142, 0.4);
+    text-underline-offset: 3px;
+    transition:
+        color 0.15s ease,
+        text-decoration-color 0.15s ease;
+}
+
+.song-about-body a:hover {
+    color: #f5f1a0;
+    text-decoration-color: rgba(245, 241, 160, 0.7);
+}
+
+/* =====================
    MOBILE
    ===================== */
 
 @media (max-width: 580px) {
     .song-lyrics {
+        border-radius: 8px;
+    }
+
+    .song-lyrics-block,
+    .song-about-block {
         border-radius: 10px;
     }
 }

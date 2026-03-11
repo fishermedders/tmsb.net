@@ -1,3 +1,4 @@
+import SEO from "../components/SEO.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 import "./Contact.css";
 
@@ -104,6 +105,10 @@ function IconGlobe() {
 export default function Contact() {
   return (
     <div className="contact-page">
+      <SEO
+        title="Contact"
+        description="Book or contact The Maple Street Band. Reach out for booking and management through Landon Strehle at Obelisk LLC."
+      />
       <PageHeader title="Contact" backTo="/" backLabel="← Home" />
 
       <div className="contact-cards">

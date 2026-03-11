@@ -1,5 +1,54 @@
 import { Link } from "react-router-dom";
+import SEO, { JsonLd } from "../../components/SEO.jsx";
 import "./Home.css";
+
+const MUSIC_GROUP_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  name: "The Maple Street Band",
+  url: "https://tmsb.net",
+  genre: ["Rock", "Jam", "Funk", "Southern Rock"],
+  foundingDate: "2024",
+  foundingLocation: {
+    "@type": "Place",
+    name: "Saint Simons Island, GA",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Saint Simons Island",
+      addressRegion: "GA",
+      addressCountry: "US",
+    },
+  },
+  member: [
+    {
+      "@type": "OrganizationRole",
+      member: { "@type": "Person", name: "Scott Akins" },
+      roleName: "Vocals",
+    },
+    {
+      "@type": "OrganizationRole",
+      member: { "@type": "Person", name: "Will Theiler" },
+      roleName: "Bass",
+    },
+    {
+      "@type": "OrganizationRole",
+      member: { "@type": "Person", name: "Fisher Medders" },
+      roleName: "Guitar & Vocals",
+    },
+    {
+      "@type": "OrganizationRole",
+      member: { "@type": "Person", name: "Jake Segars" },
+      roleName: "Drums",
+    },
+  ],
+  sameAs: [
+    "https://open.spotify.com/artist/7LJmIl49POVePlCqtd96bR",
+    "https://music.apple.com/us/artist/the-maple-street-band/1830087689",
+    "https://www.instagram.com/themaplestreetband",
+    "https://www.facebook.com/p/The-Maple-Street-Band-61560848357279/",
+    "https://www.youtube.com/@MapleStreetBand",
+  ],
+};
 
 function IconSpotify() {
   return (
@@ -159,57 +208,104 @@ function IconAbout() {
   );
 }
 
-const NAV_ITEMS = [
+function IconStats() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="2" y="13" width="4" height="8" rx="1" />
+      <rect x="9" y="8" width="4" height="13" rx="1" />
+      <rect x="16" y="3" width="4" height="18" rx="1" />
+    </svg>
+  );
+}
+
+const SINGLE_ITEMS = [
   { to: "/tour", label: "Tour / Tix", Icon: IconTour, iconMod: "tour" },
   { to: "/merch", label: "Merch", Icon: IconMerch, iconMod: "merch" },
   { to: "/contact", label: "Contact", Icon: IconContact, iconMod: "contact" },
-  { to: "/songs", label: "Songs", Icon: IconSongs, iconMod: "songs" },
-  { to: "/gallery", label: "Gallery", Icon: IconGallery, iconMod: "gallery" },
-  { to: "/about", label: "About", Icon: IconAbout, iconMod: "about" },
+];
+
+const PAIR_ROWS = [
+  [
+    { to: "/about", label: "About", Icon: IconAbout, iconMod: "about" },
+    { to: "/gallery", label: "Gallery", Icon: IconGallery, iconMod: "gallery" },
+  ],
+  [
+    { to: "/songs", label: "Songs", Icon: IconSongs, iconMod: "songs" },
+    { to: "/stats", label: "Stats", Icon: IconStats, iconMod: "stats" },
+  ],
 ];
 
 export default function Home() {
   return (
-    <nav className="home-nav">
-      <ul className="home-nav-list">
-        <li className="home-nav-item home-nav-item--streaming">
-          <a
-            href="https://open.spotify.com/artist/7LJmIl49POVePlCqtd96bR"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="home-nav-streaming-link"
-          >
-            <span className="home-nav-icon home-nav-icon--spotify">
-              <IconSpotify />
-            </span>
-            <span className="home-nav-streaming-label">Spotify</span>
-          </a>
-          <a
-            href="https://music.apple.com/us/artist/the-maple-street-band/1830087689"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="home-nav-streaming-link"
-          >
-            <span className="home-nav-icon home-nav-icon--apple-music">
-              <IconAppleMusic />
-            </span>
-            <span className="home-nav-streaming-label">Apple Music</span>
-          </a>
-        </li>
-        {NAV_ITEMS.map(({ to, label, Icon, iconMod }) => (
-          <li key={to} className="home-nav-item">
-            <Link to={to} className="home-nav-link">
-              <span className={`home-nav-icon home-nav-icon--${iconMod}`}>
-                <Icon />
+    <>
+      <SEO description="The Maple Street Band is a four-piece rock, jam, and funk group from Saint Simons Island, GA. Tour dates, songs, merch, and more." />
+      <JsonLd data={MUSIC_GROUP_JSON_LD} />
+      <nav className="home-nav">
+        <ul className="home-nav-list">
+          <li className="home-nav-item home-nav-item--streaming">
+            <a
+              href="https://open.spotify.com/artist/7LJmIl49POVePlCqtd96bR"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-nav-streaming-link"
+            >
+              <span className="home-nav-icon home-nav-icon--spotify">
+                <IconSpotify />
               </span>
-              <span className="home-nav-label">{label}</span>
-              <span className="home-nav-arrow" aria-hidden="true">
-                →
+              <span className="home-nav-streaming-label">Spotify</span>
+            </a>
+            <a
+              href="https://music.apple.com/us/artist/the-maple-street-band/1830087689"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-nav-streaming-link"
+            >
+              <span className="home-nav-icon home-nav-icon--apple-music">
+                <IconAppleMusic />
               </span>
-            </Link>
+              <span className="home-nav-streaming-label">Apple Music</span>
+            </a>
           </li>
-        ))}
-      </ul>
-    </nav>
+          {SINGLE_ITEMS.map(({ to, label, Icon, iconMod }) => (
+            <li key={to} className="home-nav-item">
+              <Link to={to} className="home-nav-link">
+                <span className={`home-nav-icon home-nav-icon--${iconMod}`}>
+                  <Icon />
+                </span>
+                <span className="home-nav-label">{label}</span>
+                <span className="home-nav-arrow" aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            </li>
+          ))}
+          {PAIR_ROWS.map((pair) => (
+            <li key={pair[0].to} className="home-nav-item home-nav-item--pair">
+              {pair.map(({ to, label, Icon, iconMod }) => (
+                <Link key={to} to={to} className="home-nav-link">
+                  <span className={`home-nav-icon home-nav-icon--${iconMod}`}>
+                    <Icon />
+                  </span>
+                  <span className="home-nav-label">{label}</span>
+                  <span className="home-nav-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              ))}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </>
   );
 }

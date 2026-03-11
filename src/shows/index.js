@@ -85,3 +85,29 @@ export function showPastCutoffFromSlug(slug) {
 export function isPastShow(slug, now = new Date()) {
   return now >= showPastCutoffFromSlug(slug);
 }
+
+/**
+ * Returns true if a setlist entry is a section header (e.g. "h|Set 1").
+ */
+export function isSetlistHeader(entry) {
+  return String(entry).startsWith("h|");
+}
+
+/**
+ * Extracts the display text from a header entry (strips the "h|" prefix).
+ */
+export function getSetlistHeaderText(entry) {
+  return String(entry).slice(2).trim();
+}
+
+/**
+ * Splits a setlist entry on " > " and returns individual song titles.
+ * A regular song returns a single-element array.
+ * A medley like "Tainted Love > Dancing with myself" returns two elements.
+ */
+export function splitSetlistEntry(entry) {
+  return String(entry)
+    .split(">")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}

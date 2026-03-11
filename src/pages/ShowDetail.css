@@ -259,6 +259,45 @@
     gap: 0.45rem;
 }
 
+/* ── Section header (h|Set 1) ── */
+
+.show-setlist-header-item {
+    list-style: none;
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(235, 231, 142, 0.55);
+    padding: 0.9rem 0 0.35rem;
+    border-bottom: 1px solid rgba(235, 231, 142, 0.12);
+    margin-bottom: 0.1rem;
+}
+
+.show-setlist-header-item:first-child {
+    padding-top: 0.1rem;
+}
+
+/* ── Medley row ── */
+
+.show-setlist-item--medley {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+}
+
+.show-setlist-part {
+    display: inline-flex;
+    align-items: center;
+}
+
+.show-setlist-medley-sep {
+    font-size: 0.85em;
+    color: rgba(245, 243, 232, 0.25);
+    padding: 0 0.4em;
+    user-select: none;
+}
+
 .show-setlist-item {
     margin: 0;
 }

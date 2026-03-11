@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation, useNavigationType } from "react-router-dom";
+import SEO from "../components/SEO.jsx";
 import { shows, isPastShow } from "../shows/index.js";
 import PageHeader from "../components/PageHeader.jsx";
 import "./Tour.css";
@@ -240,6 +241,10 @@ export default function Tour() {
 
   return (
     <div className="tour-page">
+      <SEO
+        title="Tour Dates"
+        description="Upcoming and past tour dates for The Maple Street Band. Find tickets, show details, and setlists from shows across the Southeast."
+      />
       <PageHeader title="Tour Dates" backTo="/" backLabel="← Home" />
 
       <ul className="show-list">

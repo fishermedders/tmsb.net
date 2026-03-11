@@ -1,3 +1,4 @@
+import SEO from "../components/SEO.jsx";
 import { Link } from "react-router-dom";
 import { shows, dateFromSlug } from "../shows/index.js";
 import PageHeader from "../components/PageHeader.jsx";
@@ -14,6 +15,10 @@ const galleryShows = shows
 export default function Gallery() {
   return (
     <div className="gallery-page">
+      <SEO
+        title="Gallery"
+        description="Photos and galleries from The Maple Street Band's shows across the Southeast."
+      />
       <PageHeader title="Gallery" backTo="/" backLabel="← Home" />
 
       {galleryShows.length === 0 ? (

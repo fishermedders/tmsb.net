@@ -59,7 +59,8 @@
 .past-shows-heading {
     font-family: "Rubik Bubbles", sans-serif;
     font-size: clamp(1.1rem, 3vw, 1.4rem);
-    color: rgba(245, 243, 232, 0.35);
+    color: #1e1e1c;
+    filter: drop-shadow(2px 2px 0px rgba(235, 231, 142, 0.7));
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-align: center;
@@ -75,7 +76,7 @@
     top: 50%;
     width: 20%;
     height: 1px;
-    background: rgba(245, 243, 232, 0.12);
+    background: rgba(30, 30, 28, 0.18);
 }
 
 .past-shows-heading::before {
