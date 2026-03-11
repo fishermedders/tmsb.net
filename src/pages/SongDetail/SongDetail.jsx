@@ -6,6 +6,8 @@ import { getSongBySlug } from "../../songs/index.js";
 import SongLyrics, {
   SongLyricsEmpty,
   SongLyricsSection,
+  LyricsBlock,
+  AboutBlock,
 } from "../../components/SongLyrics/SongLyrics.jsx";
 import "../../components/SongLyrics/SongLyrics.css";
 import "./SongDetail.css";
@@ -27,7 +29,8 @@ export default function SongDetail() {
     );
   }
 
-  const { Content, hasLyrics } = song;
+  const { Content, hasLyrics, hasLyricsTag, hasAboutTag } = song;
+  const usesNewFormat = hasLyricsTag || hasAboutTag;
   const artist = song.artist || "Unknown Artist";
   const author = song.author || null;
   const songKey = normalizeSongTitle(song.title);
@@ -63,24 +66,36 @@ export default function SongDetail() {
     <div className="song-detail-page">
       <SEO title={song.title} description={seoDescription} />
       {musicRecordingJsonLd && <JsonLd data={musicRecordingJsonLd} />}
-      <PageHeader title={song.title} backTo="/songs" backLabel="← Songs" />
+      <PageHeader backTo="/songs" backLabel="← Songs" />
 
       <div className="song-detail-meta">
+        <div className="song-detail-meta-top">
+          <h1 className="song-detail-title">{song.title}</h1>
+          {song.original && <span className="song-detail-badge">Original</span>}
+        </div>
         <p className="song-detail-artist">By {artist}</p>
         {author && <p className="song-detail-author">Written by {author}</p>}
       </div>
 
-      <section className="song-detail-card">
-        <SongLyricsSection title="Lyrics">
-          <SongLyrics>
-            {hasLyrics ? (
-              <Content />
-            ) : (
+      {!hasLyrics ? (
+        <section className="song-detail-card">
+          <SongLyricsSection title="Lyrics">
+            <SongLyrics>
               <SongLyricsEmpty message="Lyrics coming soon. If you want to add them, drop them into the song notes." />
-            )}
-          </SongLyrics>
-        </SongLyricsSection>
-      </section>
+            </SongLyrics>
+          </SongLyricsSection>
+        </section>
+      ) : usesNewFormat ? (
+        <Content components={{ Lyrics: LyricsBlock, About: AboutBlock }} />
+      ) : (
+        <section className="song-detail-card">
+          <SongLyricsSection title="Lyrics">
+            <SongLyrics>
+              <Content />
+            </SongLyrics>
+          </SongLyricsSection>
+        </section>
+      )}
 
       <section className="song-detail-card">
         <h2 className="song-detail-heading">Shows Played</h2>

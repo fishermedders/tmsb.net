@@ -75,6 +75,7 @@ function buildStats() {
     totalShows: pastShows.length,
     totalCities: cityMap.size,
     totalStates: stateMap.size,
+    totalVenues: venueMap.size,
     totalSongsPlayed,
     cities: ranked(cityMap),
     venues: ranked(venueMap),
@@ -207,6 +208,7 @@ export default function Stats() {
     totalShows,
     totalCities,
     totalStates,
+    totalVenues,
     totalSongsPlayed,
     cities,
     venues,
@@ -228,6 +230,7 @@ export default function Stats() {
         <StatTile number={totalShows} label="Shows Played" />
         <StatTile number={totalCities} label="Cities" />
         <StatTile number={totalStates} label="States" />
+        <StatTile number={totalVenues} label="Unique Venues" />
         <StatTile
           number={totalSongsPlayed}
           label="Songs Played"

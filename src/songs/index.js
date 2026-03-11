@@ -40,6 +40,9 @@ export const songs = Object.entries(modules)
     const rawWithoutFrontmatter = raw.replace(/^---[\s\S]*?---/, "");
     const afterFrontmatter = rawWithoutFrontmatter.trim();
 
+    const hasLyricsTag = afterFrontmatter.includes("<Lyrics");
+    const hasAboutTag = afterFrontmatter.includes("<About");
+
     const slug = path.replace("./", "").replace(".mdx", "");
     const frontmatterTitle = normalizeTitle(mod.frontmatter?.title);
     const title = frontmatterTitle
@@ -67,6 +70,8 @@ export const songs = Object.entries(modules)
       slug,
       Content: mod.default,
       hasLyrics: afterFrontmatter.length > 0,
+      hasLyricsTag,
+      hasAboutTag,
     };
   })
   .sort((a, b) => {
