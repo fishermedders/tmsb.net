@@ -11,14 +11,14 @@ import About from "./pages/About.jsx";
 import Merch from "./pages/Merch.jsx";
 import Stats from "./pages/Stats/Stats.jsx";
 
+//<div className="hero-clouds">
+//<img src="/assets/hero-clouds.png" alt="" />
+//</div>
 function App() {
   return (
     <div className="stage">
       <section className="hero">
         <div className="hero-sky-area">
-          <div className="hero-clouds">
-            <img src="/assets/hero-clouds.png" alt="" />
-          </div>
           <img
             className="hero-logo"
             src="/assets/tour-logo.png"
