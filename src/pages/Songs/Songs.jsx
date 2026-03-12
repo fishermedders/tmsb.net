@@ -7,7 +7,7 @@ import {
   isSetlistHeader,
   splitSetlistEntry,
 } from "../../shows/index.js";
-import { songs as songLibrary } from "../../songs/index.js";
+import { songs as songLibrary, aliasToSong } from "../../songs/index.js";
 import "./Songs.css";
 
 function normalizeSongTitle(title) {
@@ -23,11 +23,10 @@ function displayTitleFromSlug(slug) {
 function buildSongIndex() {
   const map = new Map();
 
-  // Seed with every cataloged (MDX-backed) song
+  // Seed with every cataloged (MDX-backed) song, keyed by its canonical slug
   songLibrary.forEach((song) => {
     const title = song.title?.trim() || displayTitleFromSlug(song.slug);
-    const key = normalizeSongTitle(title);
-    if (!key) return;
+    if (!title) return;
 
     const artist =
       typeof song.artist === "string" && song.artist.trim().length > 0
@@ -36,7 +35,7 @@ function buildSongIndex() {
           ? song.author.trim()
           : "Unknown Artist";
 
-    map.set(key, {
+    map.set(song.slug, {
       title,
       slug: song.slug,
       artist,
@@ -46,31 +45,53 @@ function buildSongIndex() {
     });
   });
 
-  // Walk every show's setlist, splitting medleys and skipping headers
+  // Walk every show's setlist, splitting medleys and skipping headers.
+  // Resolve each raw title through the alias map so variants like "Run Away"
+  // and "5 2 1" are counted toward their canonical song entry.
   shows.forEach((show) => {
     if (!Array.isArray(show.setlist)) return;
 
     show.setlist.forEach((entry) => {
       if (isSetlistHeader(entry)) return;
 
-      splitSetlistEntry(entry).forEach((title) => {
-        const trimmed = title.trim();
+      splitSetlistEntry(entry).forEach((rawTitle) => {
+        const trimmed = rawTitle.trim();
         if (!trimmed) return;
 
-        const key = normalizeSongTitle(trimmed);
-        const existing = map.get(key);
+        const normalizedKey = normalizeSongTitle(trimmed);
+        const canonicalSong = aliasToSong.get(normalizedKey);
 
-        if (existing) {
-          existing.count += 1;
+        if (canonicalSong) {
+          // We have a cataloged (MDX-backed) song — increment by slug
+          const existing = map.get(canonicalSong.slug);
+          if (existing) {
+            existing.count += 1;
+          } else {
+            // Edge case: alias resolved but song wasn't seeded (shouldn't happen)
+            map.set(canonicalSong.slug, {
+              title: canonicalSong.title,
+              slug: canonicalSong.slug,
+              artist: canonicalSong.artist || null,
+              original: Boolean(canonicalSong.original),
+              cataloged: true,
+              count: 1,
+            });
+          }
         } else {
-          map.set(key, {
-            title: trimmed,
-            slug: null,
-            artist: null,
-            original: false,
-            cataloged: false,
-            count: 1,
-          });
+          // Uncataloged song — use the normalized title as the map key
+          const existing = map.get(normalizedKey);
+          if (existing) {
+            existing.count += 1;
+          } else {
+            map.set(normalizedKey, {
+              title: trimmed,
+              slug: null,
+              artist: null,
+              original: false,
+              cataloged: false,
+              count: 1,
+            });
+          }
         }
       });
     });

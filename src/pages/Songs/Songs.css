@@ -90,6 +90,9 @@
     gap: 1rem;
     flex-wrap: wrap;
     padding: 0.9rem 1.25rem;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
 
     background: rgba(18, 18, 16, 0.62);
     backdrop-filter: blur(10px);
@@ -128,9 +131,9 @@
     filter: drop-shadow(3px 3px 0px rgba(235, 231, 142, 0.35));
     line-height: 1.2;
     min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .songs-info {
@@ -138,7 +141,8 @@
     flex-direction: column;
     gap: 0.25rem;
     min-width: 0;
-    flex: 1 1 auto;
+    flex: 1 1 0;
+    overflow: hidden;
 }
 
 .songs-title-row {
@@ -168,9 +172,9 @@
     font-size: 0.85rem;
     color: rgba(245, 243, 232, 0.65);
     line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .songs-count {

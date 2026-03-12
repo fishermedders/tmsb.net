@@ -7,7 +7,7 @@ import {
   splitSetlistEntry,
   dateFromSlug,
 } from "../shows/index.js";
-import { isKnownSongTitle } from "../songs/index.js";
+import { isKnownSongTitle, getSlugForTitle } from "../songs/index.js";
 import SEO, { JsonLd } from "../components/SEO.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 import PicflowGallery from "../components/PicflowGallery.jsx";
@@ -262,7 +262,7 @@ export default function ShowDetail() {
                       )}
                       {isKnownSongTitle(part) ? (
                         <Link
-                          to={`/songs/${slugifySong(part)}`}
+                          to={`/songs/${getSlugForTitle(part) ?? slugifySong(part)}`}
                           className="show-setlist-link"
                         >
                           {part}

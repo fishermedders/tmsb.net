@@ -10,6 +10,7 @@ import Contact from "./pages/Contact.jsx";
 import About from "./pages/About.jsx";
 import Merch from "./pages/Merch.jsx";
 import Stats from "./pages/Stats/Stats.jsx";
+import Search from "./pages/Search/Search.jsx";
 
 //<div className="hero-clouds">
 //<img src="/assets/hero-clouds.png" alt="" />
@@ -43,6 +44,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/merch" element={<Merch />} />
           <Route path="/stats" element={<Stats />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </main>
     </div>

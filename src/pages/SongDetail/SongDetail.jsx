@@ -1,7 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import SEO, { JsonLd } from "../../components/SEO.jsx";
 import PageHeader from "../../components/PageHeader.jsx";
-import { shows } from "../../shows/index.js";
+import {
+  shows,
+  isSetlistHeader,
+  splitSetlistEntry,
+} from "../../shows/index.js";
 import { getSongBySlug } from "../../songs/index.js";
 import SongLyrics, {
   SongLyricsEmpty,
@@ -33,7 +37,15 @@ export default function SongDetail() {
   const usesNewFormat = hasLyricsTag || hasAboutTag;
   const artist = song.artist || "Unknown Artist";
   const author = song.author || null;
-  const songKey = normalizeSongTitle(song.title);
+
+  // Build a set of every normalized name this song may appear under in setlists
+  // (canonical title + any declared aliases).
+  const songKeys = new Set([
+    normalizeSongTitle(song.title),
+    ...(Array.isArray(song.aliases)
+      ? song.aliases.map(normalizeSongTitle)
+      : []),
+  ]);
 
   // ── SEO helpers ────────────────────────────────────────────────────────
   const seoDescription = song.original
@@ -55,11 +67,16 @@ export default function SongDetail() {
       }
     : null;
   const showsPlayed = shows
-    .filter(
-      (show) =>
-        Array.isArray(show.setlist) &&
-        show.setlist.some((title) => normalizeSongTitle(title) === songKey),
-    )
+    .filter((show) => {
+      if (!Array.isArray(show.setlist)) return false;
+      return show.setlist.some((entry) => {
+        if (isSetlistHeader(entry)) return false;
+        // Split medleys so "Run Away > Tiki Torch" matches either song
+        return splitSetlistEntry(entry).some((part) =>
+          songKeys.has(normalizeSongTitle(part)),
+        );
+      });
+    })
     .sort((a, b) => b.slug.localeCompare(a.slug));
 
   return (
@@ -81,7 +98,7 @@ export default function SongDetail() {
         <section className="song-detail-card">
           <SongLyricsSection title="Lyrics">
             <SongLyrics>
-              <SongLyricsEmpty message="Lyrics coming soon. If you want to add them, drop them into the song notes." />
+              <SongLyricsEmpty message="Lyrics coming soon." />
             </SongLyrics>
           </SongLyricsSection>
         </section>

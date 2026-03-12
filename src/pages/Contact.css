@@ -177,6 +177,11 @@
     color: #ff7070;
 }
 
+.contact-link-icon--tiktok {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f5f3e8;
+}
+
 /* ── Text stack ── */
 
 .contact-link-info {

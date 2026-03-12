@@ -62,9 +62,21 @@ function sitemapPlugin() {
         .map((f) => f.replace(".mdx", ""));
 
       // ── song slugs ──────────────────────────────────────────────────────
-      const songSlugs = readdirSync(songsDir)
-        .filter((f) => f.endsWith(".mdx"))
-        .map((f) => f.replace(".mdx", ""));
+      // Recursively collect .mdx files from songsDir and all subdirectories.
+      // Slug is derived from the filename only (no subdirectory prefix) so
+      // that /songs/five-to-one works regardless of which subfolder it lives in.
+      function collectSongSlugs(dir) {
+        const slugs = [];
+        for (const entry of readdirSync(dir, { withFileTypes: true })) {
+          if (entry.isDirectory()) {
+            slugs.push(...collectSongSlugs(join(dir, entry.name)));
+          } else if (entry.name.endsWith(".mdx")) {
+            slugs.push(entry.name.replace(".mdx", ""));
+          }
+        }
+        return slugs;
+      }
+      const songSlugs = collectSongSlugs(songsDir);
 
       const today = new Date().toISOString().split("T")[0];
 

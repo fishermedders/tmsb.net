@@ -37,6 +37,7 @@
 
 .home-nav-link {
     flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -112,6 +113,10 @@
     background: rgba(235, 181, 100, 0.15);
     color: #e8c874;
 }
+.home-nav-icon--search {
+    background: rgba(160, 190, 235, 0.15);
+    color: #a0c0eb;
+}
 
 .home-nav-link:hover .home-nav-icon {
     border-color: rgba(235, 231, 142, 0.3);
@@ -168,10 +173,18 @@
     display: flex;
     flex-direction: row;
     gap: 0.6rem;
+    /* Force both children to share width equally — prevents a child
+       with longer label text from being wider than its sibling */
+    align-items: stretch;
+}
+
+.home-nav-item--pair .home-nav-link {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 .home-nav-streaming-link {
-    flex: 1;
+    flex: 1 1 0;
     min-width: 0;
     display: flex;
     align-items: center;
