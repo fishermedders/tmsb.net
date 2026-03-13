@@ -63,25 +63,13 @@
    ===================== */
 
 .about-divider-heading {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
     margin: 2.5rem 0.75rem 0.75rem;
     font-family: "Rubik Bubbles", sans-serif;
-    font-size: clamp(0.8rem, 2vw, 1rem);
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
     color: #1e1e1c;
-    filter: drop-shadow(2px 2px 0px rgba(235, 231, 142, 0.7));
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-}
-
-.about-divider-heading::before,
-.about-divider-heading::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: rgba(30, 30, 28, 0.18);
-    border-radius: 1px;
+    text-align: center;
 }
 
 /* =====================

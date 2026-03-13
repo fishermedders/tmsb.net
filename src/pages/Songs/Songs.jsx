@@ -6,6 +6,7 @@ import {
   shows,
   isSetlistHeader,
   splitSetlistEntry,
+  parseSetlistPart,
 } from "../../shows/index.js";
 import { songs as songLibrary, aliasToSong } from "../../songs/index.js";
 import "./Songs.css";
@@ -54,9 +55,9 @@ function buildSongIndex() {
     show.setlist.forEach((entry) => {
       if (isSetlistHeader(entry)) return;
 
-      splitSetlistEntry(entry).forEach((rawTitle) => {
-        const trimmed = rawTitle.trim();
-        if (!trimmed) return;
+      splitSetlistEntry(entry).forEach((rawPart) => {
+        const { title: trimmed, isText } = parseSetlistPart(rawPart);
+        if (!trimmed || isText) return;
 
         const normalizedKey = normalizeSongTitle(trimmed);
         const canonicalSong = aliasToSong.get(normalizedKey);
@@ -107,9 +108,14 @@ function buildSongIndex() {
 
 export default function Songs() {
   const songs = buildSongIndex();
-  const [showAll, setShowAll] = useState(true);
+  const [filter, setFilter] = useState("all");
 
-  const visibleSongs = showAll ? songs : songs.filter((s) => s.cataloged);
+  const visibleSongs =
+    filter === "all"
+      ? songs
+      : filter === "originals"
+        ? songs.filter((s) => s.original)
+        : songs.filter((s) => !s.original);
 
   return (
     <div className="songs-page">
@@ -121,16 +127,22 @@ export default function Songs() {
 
       <div className="songs-filter-toggle">
         <button
-          className={`songs-filter-btn${showAll ? " active" : ""}`}
-          onClick={() => setShowAll(true)}
+          className={`songs-filter-btn${filter === "all" ? " active" : ""}`}
+          onClick={() => setFilter("all")}
         >
           All Songs
         </button>
         <button
-          className={`songs-filter-btn${!showAll ? " active" : ""}`}
-          onClick={() => setShowAll(false)}
+          className={`songs-filter-btn${filter === "originals" ? " active" : ""}`}
+          onClick={() => setFilter("originals")}
         >
-          Cataloged
+          Originals
+        </button>
+        <button
+          className={`songs-filter-btn${filter === "covers" ? " active" : ""}`}
+          onClick={() => setFilter("covers")}
+        >
+          Covers
         </button>
       </div>
 
@@ -152,7 +164,12 @@ export default function Songs() {
                     <span className="songs-artist">{song.artist}</span>
                   )}
                 </div>
-                <span className="songs-count">{song.count}</span>
+                <span className="songs-count">
+                  <span className="songs-count-number">{song.count}</span>
+                  <span className="songs-count-label">
+                    {song.count === 1 ? "play" : "plays"}
+                  </span>
+                </span>
               </>
             );
 

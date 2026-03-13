@@ -248,13 +248,15 @@ function IconSearch() {
 }
 
 const SINGLE_ITEMS = [
-  { to: "/tour", label: "Tour / Tix", Icon: IconTour, iconMod: "tour" },
-  { to: "/merch", label: "Merch", Icon: IconMerch, iconMod: "merch" },
   { to: "/contact", label: "Contact", Icon: IconContact, iconMod: "contact" },
   { to: "/search", label: "Search", Icon: IconSearch, iconMod: "search" },
 ];
 
 const PAIR_ROWS = [
+  [
+    { to: "/tour", label: "Tour / Tix", Icon: IconTour, iconMod: "tour" },
+    { to: "/merch", label: "Merch", Icon: IconMerch, iconMod: "merch" },
+  ],
   [
     { to: "/about", label: "About", Icon: IconAbout, iconMod: "about" },
     { to: "/gallery", label: "Gallery", Icon: IconGallery, iconMod: "gallery" },
@@ -296,19 +298,6 @@ export default function Home() {
               <span className="home-nav-streaming-label">Apple Music</span>
             </a>
           </li>
-          {SINGLE_ITEMS.map(({ to, label, Icon, iconMod }) => (
-            <li key={to} className="home-nav-item">
-              <Link to={to} className="home-nav-link">
-                <span className={`home-nav-icon home-nav-icon--${iconMod}`}>
-                  <Icon />
-                </span>
-                <span className="home-nav-label">{label}</span>
-                <span className="home-nav-arrow" aria-hidden="true">
-                  →
-                </span>
-              </Link>
-            </li>
-          ))}
           {PAIR_ROWS.map((pair) => (
             <li key={pair[0].to} className="home-nav-item home-nav-item--pair">
               {pair.map(({ to, label, Icon, iconMod }) => (
@@ -322,6 +311,19 @@ export default function Home() {
                   </span>
                 </Link>
               ))}
+            </li>
+          ))}
+          {SINGLE_ITEMS.map(({ to, label, Icon, iconMod }) => (
+            <li key={to} className="home-nav-item">
+              <Link to={to} className="home-nav-link">
+                <span className={`home-nav-icon home-nav-icon--${iconMod}`}>
+                  <Icon />
+                </span>
+                <span className="home-nav-label">{label}</span>
+                <span className="home-nav-arrow" aria-hidden="true">
+                  →
+                </span>
+              </Link>
             </li>
           ))}
         </ul>

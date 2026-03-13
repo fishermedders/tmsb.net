@@ -6,7 +6,9 @@ import {
   isPastShow,
   isSetlistHeader,
   splitSetlistEntry,
+  parseSetlistPart,
 } from "../../shows/index.js";
+import { getSongByTitle } from "../../songs/index.js";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -58,10 +60,15 @@ function buildStats() {
 
     (show.setlist ?? []).forEach((entry) => {
       if (!entry || isSetlistHeader(entry)) return;
-      splitSetlistEntry(entry).forEach((song) => {
-        const key = normalizeKey(song);
+      splitSetlistEntry(entry).forEach((rawPart) => {
+        const { title: song, isText } = parseSetlistPart(rawPart);
+        if (isText) return;
+        if (!song || !song.trim()) return;
+        const canonical = getSongByTitle(song);
+        const label = canonical ? canonical.title : song;
+        const key = normalizeKey(label);
         if (!key) return;
-        increment(songMap, key, song);
+        increment(songMap, key, label);
         totalSongsPlayed += 1;
       });
     });

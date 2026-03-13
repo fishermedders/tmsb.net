@@ -101,13 +101,40 @@ export function getSetlistHeaderText(entry) {
 }
 
 /**
- * Splits a setlist entry on " > " and returns individual song titles.
+ * Splits a setlist entry on " > " and returns individual song parts (raw strings).
  * A regular song returns a single-element array.
  * A medley like "Tainted Love > Dancing with myself" returns two elements.
+ * Each returned string may still contain an [annotation] suffix — use
+ * parseSetlistPart() to separate the title from any annotation.
  */
 export function splitSetlistEntry(entry) {
   return String(entry)
     .split(">")
     .map((s) => s.trim())
     .filter(Boolean);
+}
+
+/**
+ * Parses a single setlist song part (after splitting on ">") into a clean
+ * song title and an optional annotation string.
+ *
+ * Annotation syntax: text inside [square brackets] at the end of the part.
+ *
+ * Examples:
+ *   "Space Cowboy [concise]"      → { title: "Space Cowboy",  annotation: "concise" }
+ *   "Walks [acoustic, no outro]"  → { title: "Walks",         annotation: "acoustic, no outro" }
+ *   "Space Cowboy"                → { title: "Space Cowboy",  annotation: null }
+ *
+ * The title is what gets matched against the song library and aliases.
+ * The annotation is displayed as plain text next to the link.
+ */
+export function parseSetlistPart(raw) {
+  const str = String(raw).trim();
+  // Text-only part (t| prefix) — renders as plain text, never as a link
+  if (str.startsWith("t|")) {
+    return { title: str.slice(2).trim(), annotation: null, isText: true };
+  }
+  const m = str.match(/^(.*?)\s*\[([^\]]+)\]\s*$/);
+  if (m) return { title: m[1].trim(), annotation: m[2].trim(), isText: false };
+  return { title: str, annotation: null, isText: false };
 }

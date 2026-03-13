@@ -5,6 +5,7 @@ import {
   shows,
   isSetlistHeader,
   splitSetlistEntry,
+  parseSetlistPart,
 } from "../../shows/index.js";
 import { getSongBySlug } from "../../songs/index.js";
 import SongLyrics, {
@@ -71,10 +72,12 @@ export default function SongDetail() {
       if (!Array.isArray(show.setlist)) return false;
       return show.setlist.some((entry) => {
         if (isSetlistHeader(entry)) return false;
-        // Split medleys so "Run Away > Tiki Torch" matches either song
-        return splitSetlistEntry(entry).some((part) =>
-          songKeys.has(normalizeSongTitle(part)),
-        );
+        // Split medleys so "Run Away > Tiki Torch" matches either song,
+        // then strip any [annotation] before comparing to songKeys.
+        return splitSetlistEntry(entry).some((part) => {
+          const { title, isText } = parseSetlistPart(part);
+          return !isText && songKeys.has(normalizeSongTitle(title));
+        });
       });
     })
     .sort((a, b) => b.slug.localeCompare(a.slug));

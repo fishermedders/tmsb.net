@@ -189,6 +189,9 @@ function LyricResult({ song, query }) {
 function EmptyState({ query }) {
   return (
     <div className="search-empty">
+      <div className="search-empty-icon" aria-hidden="true">
+        🔍
+      </div>
       <p className="search-empty-text">
         No results for <strong>"{query}"</strong>
       </p>
@@ -314,21 +317,30 @@ export default function Search() {
       {/* ── Idle state ──────────────────────────────────────────────────── */}
       {!hasQuery && (
         <div className="search-idle">
-          <p className="search-idle-text">
-            Search songs, shows, venues, cities, and lyrics.
-          </p>
-          <div className="search-idle-pills">
-            {["Rafters", "Walks", "Athens", "original", "hey buddy"].map(
-              (suggestion) => (
-                <button
-                  key={suggestion}
-                  className="search-idle-pill"
-                  onClick={() => setQuery(suggestion)}
-                >
-                  {suggestion}
-                </button>
-              ),
-            )}
+          <div className="search-idle-label">
+            <span className="search-idle-icon" aria-hidden="true">
+              🎵
+            </span>
+            <p className="search-idle-text">
+              Search songs, shows, venues, cities, and lyrics.
+            </p>
+          </div>
+          <hr className="search-idle-divider" />
+          <div className="search-idle-pills-wrap">
+            <p className="search-idle-pills-label">Try a search</p>
+            <div className="search-idle-pills">
+              {["Rafters", "Walks", "Athens", "original", "hey buddy"].map(
+                (suggestion) => (
+                  <button
+                    key={suggestion}
+                    className="search-idle-pill"
+                    onClick={() => setQuery(suggestion)}
+                  >
+                    {suggestion}
+                  </button>
+                ),
+              )}
+            </div>
           </div>
         </div>
       )}

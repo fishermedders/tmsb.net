@@ -5,9 +5,14 @@ import {
   isSetlistHeader,
   getSetlistHeaderText,
   splitSetlistEntry,
+  parseSetlistPart,
   dateFromSlug,
 } from "../shows/index.js";
-import { isKnownSongTitle, getSlugForTitle } from "../songs/index.js";
+import {
+  isKnownSongTitle,
+  getSlugForTitle,
+  getSongByTitle,
+} from "../songs/index.js";
 import SEO, { JsonLd } from "../components/SEO.jsx";
 import PageHeader from "../components/PageHeader.jsx";
 import PicflowGallery from "../components/PicflowGallery.jsx";
@@ -250,39 +255,63 @@ export default function ShowDetail() {
                   key={i}
                   className={`show-setlist-item${parts.length > 1 ? " show-setlist-item--medley" : ""}`}
                 >
-                  {parts.map((part, j) => (
-                    <span key={j} className="show-setlist-part">
-                      {j > 0 && (
-                        <span
-                          className="show-setlist-medley-sep"
-                          aria-hidden="true"
-                        >
-                          ›
-                        </span>
-                      )}
-                      {isKnownSongTitle(part) ? (
-                        <Link
-                          to={`/songs/${getSlugForTitle(part) ?? slugifySong(part)}`}
-                          className="show-setlist-link"
-                        >
-                          {part}
-                        </Link>
-                      ) : (
-                        <span
-                          className="show-setlist-no-page"
-                          title="No song page yet"
-                        >
-                          {part}
+                  {parts.map((rawPart, j) => {
+                    const { title, annotation, isText } =
+                      parseSetlistPart(rawPart);
+                    const songData = !isText ? getSongByTitle(title) : null;
+                    const artist =
+                      songData && songData.artist ? songData.artist : null;
+                    return (
+                      <span key={j} className="show-setlist-part">
+                        {j > 0 && (
                           <span
-                            className="show-setlist-broken-icon"
-                            aria-label="No song page"
+                            className="show-setlist-medley-sep"
+                            aria-hidden="true"
                           >
-                            <IconBrokenLink />
+                            ›
                           </span>
+                        )}
+                        <span className="show-setlist-part-inner">
+                          {isText ? (
+                            <span className="show-setlist-text">{title}</span>
+                          ) : isKnownSongTitle(title) ? (
+                            <Link
+                              to={`/songs/${getSlugForTitle(title) ?? slugifySong(title)}`}
+                              className="show-setlist-link"
+                            >
+                              {title}
+                            </Link>
+                          ) : (
+                            <span
+                              className="show-setlist-no-page"
+                              title="No song page yet"
+                            >
+                              {title}
+                              <span
+                                className="show-setlist-broken-icon"
+                                aria-label="No song page"
+                              >
+                                <IconBrokenLink />
+                              </span>
+                            </span>
+                          )}
+                          {!isText && (
+                            <span
+                              className="show-setlist-part-artist"
+                              aria-hidden={!artist}
+                            >
+                              {artist ?? "\u00a0"}
+                            </span>
+                          )}
                         </span>
-                      )}
-                    </span>
-                  ))}
+                        {annotation && (
+                          <span className="show-setlist-annotation">
+                            {annotation}
+                          </span>
+                        )}
+                      </span>
+                    );
+                  })}
                 </li>
               );
             })}
