@@ -15,7 +15,7 @@ import {
 } from "../songs/index.js";
 import SEO, { JsonLd } from "../components/SEO.jsx";
 import PageHeader from "../components/PageHeader.jsx";
-import PicflowGallery from "../components/PicflowGallery.jsx";
+import ImmichGallery from "../components/ImmichGallery.jsx";
 import "./ShowDetail.css";
 
 function IconBrokenLink() {
@@ -47,8 +47,6 @@ function slugifySong(title) {
 }
 
 export default function ShowDetail() {
-  // picflow.com
-  //
   const { slug } = useParams();
   const show = getShowBySlug(slug);
 
@@ -321,10 +319,10 @@ export default function ShowDetail() {
         )}
       </section>
 
-      {/* Picflow photo gallery — only rendered when galleryId is set */}
+      {/* Immich photo gallery — only rendered when galleryId is set */}
       {galleryId && (
         <div className="show-detail-gallery">
-          <PicflowGallery id={galleryId} />
+          <ImmichGallery shareKey={galleryId} mode="full" />
         </div>
       )}
     </div>

@@ -1,0 +1,30 @@
+/* =====================
+   IMMICH GALLERY
+   ===================== */
+
+/* ── Cover mode ─────────────────────────────────────────────────────────── */
+
+.immich-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.35s ease;
+}
+
+.gallery-card:hover .immich-cover-img {
+    transform: scale(1.04);
+}
+
+/* ── Iframe (full gallery) ──────────────────────────────────────────────── */
+
+.immich-gallery-iframe {
+    width: 100%;
+    min-width: 0;
+    min-height: 600px;
+    border: none;
+    border-radius: 8px;
+    display: block;
+    box-sizing: border-box;
+}

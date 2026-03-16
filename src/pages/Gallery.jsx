@@ -2,7 +2,7 @@ import SEO from "../components/SEO.jsx";
 import { Link } from "react-router-dom";
 import { shows, dateFromSlug } from "../shows/index.js";
 import PageHeader from "../components/PageHeader.jsx";
-import PicflowGallery from "../components/PicflowGallery.jsx";
+import ImmichGallery from "../components/ImmichGallery.jsx";
 import "./Gallery.css";
 
 const today = new Date();
@@ -33,9 +33,9 @@ export default function Gallery() {
             const isPast = dateFromSlug(show.slug) < today;
             return (
               <div key={show.slug} className="gallery-card">
-                {/* Picflow thumbnail */}
+                {/* Immich cover thumbnail */}
                 <div className="gallery-card-thumb">
-                  <PicflowGallery id={show.galleryId} />
+                  <ImmichGallery shareKey={show.galleryId} mode="cover" />
                 </div>
 
                 {/* Show info footer */}
