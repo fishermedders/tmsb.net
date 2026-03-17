@@ -1,0 +1,303 @@
+/* =====================
+   ALBUM GALLERY
+   ===================== */
+
+/* ── Loading dots ───────────────────────────────────────────────────────── */
+
+.album-gallery-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 3rem 1rem;
+}
+
+.album-gallery-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(235, 231, 142, 0.6);
+    animation: album-gallery-pulse 1.2s ease-in-out infinite;
+}
+
+.album-gallery-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.album-gallery-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes album-gallery-pulse {
+    0%,
+    80%,
+    100% {
+        transform: scale(0.7);
+        opacity: 0.35;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ── Error ──────────────────────────────────────────────────────────────── */
+
+.album-gallery-error {
+    margin: 0;
+    padding: 2rem 1rem;
+    text-align: center;
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: rgba(245, 243, 232, 0.35);
+}
+
+/* ── Video thumbnail in masonry grid ────────────────────────────────────── */
+
+.album-gallery-video-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #0a0a08;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.album-gallery-video-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.album-gallery-play-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.28);
+    transition: background 0.2s ease;
+}
+
+.album-gallery-cell:hover .album-gallery-play-btn {
+    background: rgba(0, 0, 0, 0.18);
+}
+
+.album-gallery-play-btn svg {
+    width: 3rem;
+    height: 3rem;
+    color: rgba(255, 255, 255, 0.88);
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.6));
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+}
+
+.album-gallery-cell:hover .album-gallery-play-btn svg {
+    transform: scale(1.12);
+    color: #fff;
+}
+
+/* ── Masonry photo grid ──────────────────────────────────────────────────── */
+
+.album-gallery-grid {
+    columns: 4;
+    column-gap: 5px;
+    padding: 0 0.75rem;
+}
+
+.album-gallery-cell {
+    break-inside: avoid;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: zoom-in;
+    position: relative;
+    border: 1px solid rgba(235, 231, 142, 0.07);
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.album-gallery-cell:hover {
+    border-color: rgba(235, 231, 142, 0.3);
+    transform: scale(1.015);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+.album-gallery-cell:focus-visible {
+    outline: 2px solid rgba(235, 231, 142, 0.7);
+    outline-offset: 2px;
+}
+
+.album-gallery-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ── Lightbox ────────────────────────────────────────────────────────────── */
+
+.album-gallery-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(10, 10, 8, 0.93);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+}
+
+.album-gallery-lb-img {
+    max-width: min(92vw, 1400px);
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.7);
+    cursor: default;
+    object-fit: contain;
+}
+
+.album-gallery-lb-video {
+    max-width: min(92vw, 1200px);
+    max-height: 85vh;
+    width: auto;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.7);
+    cursor: default;
+    background: #000;
+}
+
+/* Close button */
+.album-gallery-lb-close {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1.5px solid rgba(235, 231, 142, 0.35);
+    background: rgba(18, 18, 16, 0.75);
+    color: rgba(245, 243, 232, 0.8);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.album-gallery-lb-close:hover {
+    background: rgba(235, 231, 142, 0.15);
+    border-color: rgba(235, 231, 142, 0.7);
+    color: #ebe78e;
+    transform: scale(1.1);
+}
+
+/* Counter */
+.album-gallery-lb-counter {
+    position: fixed;
+    top: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: 0.85rem;
+    color: rgba(245, 243, 232, 0.45);
+    letter-spacing: 0.06em;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Prev / Next buttons */
+.album-gallery-lb-prev,
+.album-gallery-lb-next {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 1.5px solid rgba(235, 231, 142, 0.25);
+    background: rgba(18, 18, 16, 0.65);
+    color: rgba(245, 243, 232, 0.75);
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.album-gallery-lb-prev:hover,
+.album-gallery-lb-next:hover {
+    background: rgba(235, 231, 142, 0.12);
+    border-color: rgba(235, 231, 142, 0.6);
+    color: #ebe78e;
+}
+
+.album-gallery-lb-prev {
+    left: 1.25rem;
+}
+
+.album-gallery-lb-prev:hover {
+    transform: translateY(-50%) scale(1.08);
+}
+
+.album-gallery-lb-next {
+    right: 1.25rem;
+}
+
+.album-gallery-lb-next:hover {
+    transform: translateY(-50%) scale(1.08);
+}
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+
+/* Tablet (≤ 900px) */
+@media (max-width: 900px) {
+    .album-gallery-grid {
+        columns: 3;
+    }
+}
+
+/* Small tablet (≤ 640px) */
+@media (max-width: 640px) {
+    .album-gallery-grid {
+        columns: 2;
+    }
+
+    .album-gallery-lb-prev {
+        left: 0.5rem;
+    }
+
+    .album-gallery-lb-next {
+        right: 0.5rem;
+    }
+
+    .album-gallery-lb-img {
+        max-width: 96vw;
+        max-height: 85vh;
+    }
+}

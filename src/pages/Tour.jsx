@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigationType } from "react-router-dom";
 import SEO from "../components/SEO.jsx";
 import { shows, isPastShow } from "../shows/index.js";
@@ -69,11 +69,13 @@ function IconSetlist() {
   );
 }
 
+const API_BASE = "https://tmsb-media-worker.fishermedders.workers.dev";
+
 const visibleShows = shows.filter((s) => !s.hidden);
 const upcomingShows = visibleShows.filter((s) => !isPastShow(s.slug));
 const pastShows = visibleShows.filter((s) => isPastShow(s.slug)).reverse(); // newest first
 
-function ShowCard({ show, isPast }) {
+function ShowCard({ show, isPast, hasAlbum }) {
   const hasTicketContent =
     show.soldOut || show.ticketsComingSoon || !!show.ticketUrl;
 
@@ -142,7 +144,7 @@ function ShowCard({ show, isPast }) {
             }, [])}
           </div>
         )}
-        {isPast && (show.hasContent || show.galleryId || show.hasSetlist) && (
+        {isPast && (show.hasContent || hasAlbum || show.hasSetlist) && (
           <div className="show-indicators">
             {show.hasSetlist && (
               <span
@@ -164,7 +166,7 @@ function ShowCard({ show, isPast }) {
                 Notes
               </span>
             )}
-            {show.galleryId && (
+            {hasAlbum && (
               <span
                 className="show-indicator show-indicator--gallery"
                 title="Photo gallery"
@@ -214,6 +216,18 @@ export default function Tour() {
   const navType = useNavigationType();
   const scrollYRef = useRef(0);
 
+  // Set of YYMMDD prefixes that have a matching album in R2
+  const [albumPrefixes, setAlbumPrefixes] = useState(new Set());
+
+  useEffect(() => {
+    fetch(`${API_BASE}/albums`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((albums) => {
+        setAlbumPrefixes(new Set(albums.map((a) => a.id.slice(0, 6))));
+      })
+      .catch(() => {});
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       scrollYRef.current = window.scrollY || 0;
@@ -250,7 +264,12 @@ export default function Tour() {
       <ul className="show-list">
         {upcomingShows.length > 0 ? (
           upcomingShows.map((show) => (
-            <ShowCard key={show.slug} show={show} isPast={false} />
+            <ShowCard
+              key={show.slug}
+              show={show}
+              isPast={false}
+              hasAlbum={albumPrefixes.has(show.slug.slice(0, 6))}
+            />
           ))
         ) : (
           <li className="no-shows">No upcoming shows — check back soon!</li>
@@ -262,7 +281,12 @@ export default function Tour() {
           <h2 className="past-shows-heading">Past Shows</h2>
           <ul className="show-list show-list--past">
             {pastShows.map((show) => (
-              <ShowCard key={show.slug} show={show} isPast={true} />
+              <ShowCard
+                key={show.slug}
+                show={show}
+                isPast={true}
+                hasAlbum={albumPrefixes.has(show.slug.slice(0, 6))}
+              />
             ))}
           </ul>
         </>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   getShowBySlug,
@@ -15,7 +16,7 @@ import {
 } from "../songs/index.js";
 import SEO, { JsonLd } from "../components/SEO.jsx";
 import PageHeader from "../components/PageHeader.jsx";
-import ImmichGallery from "../components/ImmichGallery.jsx";
+import AlbumGallery from "../components/AlbumGallery.jsx";
 import "./ShowDetail.css";
 
 function IconBrokenLink() {
@@ -61,7 +62,7 @@ export default function ShowDetail() {
     );
   }
 
-  const { Content, hasContent, galleryId } = show;
+  const { Content, hasContent } = show;
   const posterSrc = show.poster
     ? `/assets/posters/${show.poster}`
     : "/assets/poster_default.jpg";
@@ -70,6 +71,20 @@ export default function ShowDetail() {
     show.soldOut || show.ticketsComingSoon || !!show.ticketUrl;
 
   const isPast = isPastShow(show.slug);
+
+  const [matchedAlbumId, setMatchedAlbumId] = useState(null);
+
+  useEffect(() => {
+    if (!isPast) return;
+    const datePrefix = show.slug.slice(0, 6);
+    fetch("https://tmsb-media-worker.fishermedders.workers.dev/albums")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((albums) => {
+        const match = albums.find((a) => a.id.slice(0, 6) === datePrefix);
+        if (match) setMatchedAlbumId(match.id);
+      })
+      .catch(() => {});
+  }, [show.slug, isPast]);
 
   const metaItems = [];
   if (show.doors) {
@@ -232,6 +247,13 @@ export default function ShowDetail() {
         )}
       </div>
 
+      {matchedAlbumId && (
+        <section className="show-detail-gallery">
+          <h2 className="show-setlist-heading">Photos</h2>
+          <AlbumGallery albumId={matchedAlbumId} />
+        </section>
+      )}
+
       <section className="show-setlist">
         <h2 className="show-setlist-heading">Setlist</h2>
         {show.setlist && show.setlist.length > 0 ? (
@@ -318,13 +340,6 @@ export default function ShowDetail() {
           <p className="show-setlist-empty">Setlist coming soon.</p>
         )}
       </section>
-
-      {/* Immich photo gallery — only rendered when galleryId is set */}
-      {galleryId && (
-        <div className="show-detail-gallery">
-          <ImmichGallery shareKey={galleryId} mode="full" />
-        </div>
-      )}
     </div>
   );
 }

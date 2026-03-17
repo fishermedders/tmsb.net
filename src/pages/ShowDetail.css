@@ -215,13 +215,22 @@
    ===================== */
 
 .show-detail-gallery {
-    border-radius: 14px;
-    overflow: hidden;
-    border: 1px solid rgba(235, 231, 142, 0.18);
-    background: rgba(18, 18, 16, 0.68);
+    background: rgba(18, 18, 16, 0.58);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    padding: 0 1.25rem;
+    border: 1px solid rgba(235, 231, 142, 0.12);
+    border-radius: 14px;
+    overflow: hidden;
+    padding-bottom: 1.25rem;
+}
+
+.show-detail-gallery .show-setlist-heading {
+    padding: clamp(1.25rem, 4vw, 2rem) clamp(1.25rem, 4vw, 2rem) 0.75rem;
+}
+
+/* Bleed the grid to the card edges, let AlbumGallery handle its own padding */
+.show-detail-gallery .album-gallery-grid {
+    padding: 0 0.75rem;
 }
 
 /* =====================
