@@ -24,24 +24,64 @@
 .album-cover-mosaic {
     width: 100%;
     height: 100%;
-    columns: 4;
-    column-gap: 2px;
-    column-fill: auto;
+    display: grid;
+    grid-template-columns: repeat(var(--mosaic-cols, 4), 1fr);
+    grid-template-rows: repeat(var(--mosaic-rows, 4), 1fr);
+    gap: 2px;
     overflow: hidden;
-    display: block;
 }
 
-/* ── Individual tiles ───────────────────────────────────────────────────── */
+/* ── Photo tiles ────────────────────────────────────────────────────────── */
 
 .album-cover-mosaic-img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     display: block;
-    margin-bottom: 2px;
-    break-inside: avoid;
     transition: transform 0.35s ease;
 }
 
 .gallery-card:hover .album-cover-mosaic-img {
-    transform: scale(1.04);
+    transform: scale(1.05);
+}
+
+/* ── Video placeholder tiles ────────────────────────────────────────────── */
+
+.album-cover-mosaic-video {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        135deg,
+        rgba(20, 20, 16, 0.95) 0%,
+        rgba(35, 33, 22, 0.9) 100%
+    );
+    transition: background 0.25s ease;
+}
+
+.gallery-card:hover .album-cover-mosaic-video {
+    background: linear-gradient(
+        135deg,
+        rgba(30, 28, 18, 0.95) 0%,
+        rgba(50, 47, 28, 0.9) 100%
+    );
+}
+
+.album-cover-mosaic-play {
+    width: 32%;
+    height: 32%;
+    max-width: 1.75rem;
+    max-height: 1.75rem;
+    color: rgba(235, 231, 142, 0.35);
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.gallery-card:hover .album-cover-mosaic-play {
+    color: rgba(235, 231, 142, 0.6);
+    transform: scale(1.15);
 }

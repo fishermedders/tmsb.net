@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import "./AlbumGallery.css";
 
@@ -34,6 +34,42 @@ function getLightboxUrl(item) {
     return cfImage(item.url, "quality=90");
   }
   return item.url;
+}
+
+/**
+ * Renders a video thumbnail that reliably shows the first frame on mobile.
+ * Uses both the #t=0.001 URL fragment and a JS seek after metadata loads,
+ * since mobile browsers (especially iOS Safari) often ignore preload="metadata".
+ */
+function VideoThumb({ url }) {
+  const videoRef = useRef(null);
+
+  const forceFirstFrame = useCallback(() => {
+    const v = videoRef.current;
+    if (v && v.readyState >= 1) {
+      v.currentTime = 0.001;
+    }
+  }, []);
+
+  return (
+    <div className="album-gallery-video-thumb">
+      <video
+        ref={videoRef}
+        className="album-gallery-video-preview"
+        src={`${url}#t=0.001`}
+        preload="metadata"
+        muted
+        playsInline
+        onLoadedMetadata={forceFirstFrame}
+        onLoadedData={forceFirstFrame}
+      />
+      <div className="album-gallery-play-btn" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </div>
+    </div>
+  );
 }
 
 export default function AlbumGallery({ albumId }) {
@@ -138,20 +174,7 @@ export default function AlbumGallery({ albumId }) {
             }}
           >
             {item.isVideo ? (
-              <div className="album-gallery-video-thumb">
-                <video
-                  className="album-gallery-video-preview"
-                  src={item.url}
-                  preload="metadata"
-                  muted
-                  playsInline
-                />
-                <div className="album-gallery-play-btn" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-              </div>
+              <VideoThumb url={item.url} />
             ) : (
               <img
                 className="album-gallery-img"
