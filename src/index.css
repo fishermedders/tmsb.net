@@ -1,8 +1,48 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap");
 
 :root {
+    /* ── Border frame (currently disabled) ── */
     --border-frame-size: 0px;
     --border-frame-color: #161614;
+
+    /* ── Colors ── */
+    --color-accent: #ebe78e;
+    --color-accent-light: #f5f1a0;
+    --color-accent-glow: rgba(235, 231, 142, 0.35);
+    --color-text-primary: #f5f3e8;
+    --color-text-secondary: rgba(245, 243, 232, 0.65);
+    --color-text-muted: rgba(245, 243, 232, 0.4);
+    --color-text-dark: #1e1e1c;
+    --color-card-bg: rgba(18, 18, 16, 0.65);
+    --color-card-bg-hover: rgba(18, 18, 16, 0.8);
+    --color-border: rgba(235, 231, 142, 0.18);
+    --color-border-hover: rgba(235, 231, 142, 0.45);
+
+    /* ── Typography ── */
+    --font-display: "Rubik Bubbles", sans-serif;
+    --font-body:
+        system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+
+    /* ── Spacing ── */
+    --page-gutter: 0.75rem;
+    --page-padding-top: 1rem;
+    --page-padding-bottom: 3rem;
+    --card-gap: 0.75rem;
+
+    /* ── Border radius ── */
+    --radius-card: 14px;
+    --radius-card-sm: 10px;
+    --radius-pill: 999px;
+
+    /* ── Effects ── */
+    --blur-card: blur(10px);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.35);
+
+    /* ── Transitions ── */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.2s ease;
 }
 
 /* =====================
@@ -20,15 +60,7 @@ body {
 
 body {
     background: url("/assets/hero-background.jpg") repeat center top / auto;
-    font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
+    font-family: var(--font-body);
 }
 
 /* =====================

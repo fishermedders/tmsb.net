@@ -1,0 +1,138 @@
+/* =====================
+   SITE FOOTER
+   ===================== */
+
+.site-footer {
+    margin: 2.5rem 0.75rem 0;
+    padding: 1.5rem 1.25rem 1.25rem;
+    background: rgba(18, 18, 16, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(235, 231, 142, 0.12);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* =====================
+   NAV PILLS
+   ===================== */
+
+.footer-nav-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.footer-nav-pill {
+    font-family: "Rubik Bubbles", sans-serif;
+    font-size: 0.78rem;
+    color: rgba(245, 243, 232, 0.55);
+    text-decoration: none;
+    padding: 0.4em 0.85em;
+    border-radius: 999px;
+    border: 1px solid rgba(235, 231, 142, 0.12);
+    background: rgba(235, 231, 142, 0.04);
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+}
+
+.footer-nav-pill:hover {
+    background: rgba(235, 231, 142, 0.1);
+    border-color: rgba(235, 231, 142, 0.35);
+    color: #f5f3e8;
+    transform: translateY(-1px);
+}
+
+.footer-nav-pill:active {
+    transform: translateY(0);
+}
+
+.footer-nav-pill--active {
+    background: rgba(235, 231, 142, 0.15);
+    border-color: rgba(235, 231, 142, 0.4);
+    color: #ebe78e;
+}
+
+/* =====================
+   SOCIAL ICONS
+   ===================== */
+
+.footer-social {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.footer-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 8px;
+    color: rgba(245, 243, 232, 0.35);
+    background: rgba(235, 231, 142, 0.04);
+    border: 1px solid rgba(235, 231, 142, 0.08);
+    transition:
+        color 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.footer-social-link:hover {
+    color: #ebe78e;
+    background: rgba(235, 231, 142, 0.1);
+    border-color: rgba(235, 231, 142, 0.3);
+    transform: translateY(-1px);
+}
+
+.footer-social-link:active {
+    transform: translateY(0);
+}
+
+/* =====================
+   COPYRIGHT
+   ===================== */
+
+.footer-copy {
+    margin: 0;
+    font-size: 0.68rem;
+    color: rgba(245, 243, 232, 0.2);
+    letter-spacing: 0.06em;
+    text-align: center;
+}
+
+/* =====================
+   MOBILE
+   ===================== */
+
+@media (max-width: 580px) {
+    .site-footer {
+        margin: 2rem 0.75rem 0;
+        padding: 1.25rem 1rem 1rem;
+        border-radius: 12px;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .footer-nav-pill {
+        font-size: 0.74rem;
+        padding: 0.35em 0.75em;
+    }
+
+    .footer-social-link {
+        width: 1.85rem;
+        height: 1.85rem;
+    }
+}

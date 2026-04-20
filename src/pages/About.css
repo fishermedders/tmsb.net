@@ -3,7 +3,7 @@
    ===================== */
 
 .about-page {
-    padding: 1rem 0 3rem;
+    padding: 1rem 0 1rem;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -142,7 +142,7 @@
 
 .about-members-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.25rem 1rem;
 }
 
@@ -267,7 +267,7 @@
     }
 
     .about-members-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 

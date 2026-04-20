@@ -3,7 +3,7 @@
    ===================== */
 
 .search-page {
-    padding: 1rem 0.75rem 3rem;
+    padding: 1rem 0.75rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -436,7 +436,7 @@
 
 @media (max-width: 580px) {
     .search-page {
-        padding: 1rem 0.75rem 2.5rem;
+        padding: 1rem 0.75rem 0.75rem;
         gap: 1rem;
     }
 

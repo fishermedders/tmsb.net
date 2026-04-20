@@ -11,10 +11,9 @@ import About from "./pages/About.jsx";
 import Merch from "./pages/Merch.jsx";
 import Stats from "./pages/Stats/Stats.jsx";
 import Search from "./pages/Search/Search.jsx";
+import NotFound from "./pages/NotFound.jsx";
+import Footer from "./components/Footer.jsx";
 
-//<div className="hero-clouds">
-//<img src="/assets/hero-clouds.png" alt="" />
-//</div>
 function App() {
   return (
     <div className="stage">
@@ -45,7 +44,9 @@ function App() {
           <Route path="/merch" element={<Merch />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/search" element={<Search />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </main>
     </div>
   );
