@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Link, useLocation, useNavigationType } from "react-router-dom";
 import SEO from "../components/SEO.jsx";
-import { shows, isPastShow } from "../shows/index.js";
+import { shows } from "../shows/index.js";
 import PageHeader from "../components/PageHeader.jsx";
 import "./Tour.css";
 
@@ -71,9 +71,50 @@ function IconSetlist() {
 
 const API_BASE = "https://tmsb-media-worker.fishermedders.workers.dev";
 
-const visibleShows = shows.filter((s) => !s.hidden);
-const upcomingShows = visibleShows.filter((s) => !isPastShow(s.slug));
-const pastShows = visibleShows.filter((s) => isPastShow(s.slug)).reverse(); // newest first
+/**
+ * Parse the YYMMDD prefix at the start of a slug into a local Date at midnight.
+ * e.g. "260409_40watt" -> new Date(2026, 3, 9)  // local midnight
+ *
+ * Returns a Date object (local midnight) or null if the slug doesn't start with YYMMDD.
+ */
+function dateFromSlugLocal(slug) {
+  if (!slug || typeof slug !== "string") return null;
+  const m = slug.match(/^(\d{2})(\d{2})(\d{2})/);
+  if (!m) return null;
+  const [, yy, mm, dd] = m;
+  const year = 2000 + Number(yy);
+  const monthIndex = Number(mm) - 1;
+  const day = Number(dd);
+  if (
+    Number.isFinite(year) &&
+    Number.isFinite(monthIndex) &&
+    Number.isFinite(day)
+  ) {
+    return new Date(year, monthIndex, day); // local midnight
+  }
+  return null;
+}
+
+/**
+ * Returns true if the show should be considered "past" using a next-day 03:00 cutoff.
+ *
+ * Rule: a show on YYYY-MM-DD remains "upcoming" until YYYY-MM-(DD+1) at 03:00 local time.
+ * It becomes "past" once now > that cutoff.
+ *
+ * If the slug doesn't parse, conservatively return false (keep it upcoming).
+ */
+function isPastShowWith3amNextDay(slug, now = new Date()) {
+  const showDate = dateFromSlugLocal(slug);
+  if (!(showDate instanceof Date) || isNaN(showDate.getTime())) {
+    return false;
+  }
+
+  const cutoff = new Date(showDate);
+  cutoff.setDate(cutoff.getDate() + 1); // next day
+  cutoff.setHours(3, 0, 0, 0); // 03:00 local time on next day
+
+  return now > cutoff;
+}
 
 function ShowCard({ show, isPast, hasAlbum }) {
   const hasTicketContent =
@@ -216,7 +257,7 @@ export default function Tour() {
   const navType = useNavigationType();
   const scrollYRef = useRef(0);
 
-  // Set of YYMMDD prefixes that have a matching album in R2
+  // albumPrefixes fetched from API
   const [albumPrefixes, setAlbumPrefixes] = useState(new Set());
 
   useEffect(() => {
@@ -252,6 +293,28 @@ export default function Tour() {
 
     requestAnimationFrame(() => window.scrollTo(0, y));
   }, [navType, location.key]);
+
+  // Tick every minute so that cutoffs crossing 03:00 update without a full page reload.
+  const [tick, setTick] = useState(Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setTick(Date.now()), 60 * 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Compute visible / upcoming / past inside the component so we always use the current time.
+  const visibleShows = useMemo(() => shows.filter((s) => !s.hidden), [tick]);
+  const upcomingShows = useMemo(
+    () =>
+      visibleShows.filter((s) => !isPastShowWith3amNextDay(s.slug, new Date())),
+    [visibleShows, tick],
+  );
+  const pastShows = useMemo(
+    () =>
+      visibleShows
+        .filter((s) => isPastShowWith3amNextDay(s.slug, new Date()))
+        .reverse(),
+    [visibleShows, tick],
+  );
 
   return (
     <div className="tour-page">
